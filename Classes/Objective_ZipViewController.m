@@ -4,6 +4,7 @@
 //
 //  Created by Gianluca Bertani on 25/12/09.
 //  Copyright Flying Dolphin Studio 2009. All rights reserved.
+//	Modified by Geoff Pado on 29/10/10.
 //
 //  Redistribution and use in source and binary forms, with or without 
 //  modification, are permitted provided that the following conditions 
@@ -34,7 +35,7 @@
 #import "Objective_ZipViewController.h"
 #import "../Objective-Zip/ZipFile.h"
 #import "../Objective-Zip/ZipException.h"
-#import "../Objective-Zip/FileInZipInfo.h"
+#import "../Objective-Zip/ZipFileInfo.h"
 #import "../Objective-Zip/ZipWriteStream.h"
 #import "../Objective-Zip/ZipReadStream.h"
 
@@ -114,7 +115,7 @@
 		[self performSelectorOnMainThread:@selector(log:) withObject:@"Reading file infos..." waitUntilDone:YES];
 		
 		NSArray *infos= [unzipFile listFileInZipInfos];
-		for (FileInZipInfo *info in infos) {
+		for (ZipFileInfo *info in infos) {
 			NSString *fileInfo= [NSString stringWithFormat:@"- %@ %@ %d (%d)", info.name, info.date, info.size, info.level];
 			[self performSelectorOnMainThread:@selector(log:) withObject:fileInfo waitUntilDone:YES];
 		}

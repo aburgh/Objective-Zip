@@ -1,9 +1,10 @@
 //
-//  FileInZipInfo.h
+//  ZipFileInfo.h
 //  Objective-Zip v. 0.7.2
 //
 //  Created by Gianluca Bertani on 27/12/09.
 //  Copyright 2009-10 Flying Dolphin Studio. All rights reserved.
+//	Modified by Geoff Pado on 29/10/10.
 //
 //  Redistribution and use in source and binary forms, with or without 
 //  modification, are permitted provided that the following conditions 
@@ -35,7 +36,7 @@
 #import "ZipFile.h"
 
 
-@interface FileInZipInfo : NSObject {
+@interface ZipFileInfo : NSObject {
 	
 @private
 	NSUInteger _length;

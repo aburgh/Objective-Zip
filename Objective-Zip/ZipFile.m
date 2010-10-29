@@ -4,6 +4,7 @@
 //
 //  Created by Gianluca Bertani on 25/12/09.
 //  Copyright 2009-10 Flying Dolphin Studio. All rights reserved.
+//	Modified by Geoff Pado on 29/10/10.
 //
 //  Redistribution and use in source and binary forms, with or without 
 //  modification, are permitted provided that the following conditions 
@@ -35,7 +36,7 @@
 #import "ZipException.h"
 #import "ZipReadStream.h"
 #import "ZipWriteStream.h"
-#import "FIleInZipInfo.h"
+#import "ZipFileInfo.h"
 
 #define FILE_IN_ZIP_MAX_NAME_LENGTH (256)
 
@@ -222,7 +223,7 @@
 
 	[self goToFirstFileInZip];
 	for (int i= 0; i < num; i++) {
-		FileInZipInfo *info= [self getCurrentFileInZipInfo];
+		ZipFileInfo *info= [self getCurrentFileInZipInfo];
 		[files addObject:info];
 
 		if ((i +1) < num)
@@ -281,7 +282,7 @@
 	return YES;
 }
 
-- (FileInZipInfo *) getCurrentFileInZipInfo {
+- (ZipFileInfo *) getCurrentFileInZipInfo {
 	if (_mode != ZipFileModeUnzip) {
 		NSString *reason= [NSString stringWithFormat:@"Operation not permitted without Unzip mode"];
 		@throw [[[ZipException alloc] initWithReason:reason] autorelease];
@@ -327,7 +328,7 @@
 	NSCalendar *calendar= [NSCalendar currentCalendar];
 	NSDate *date= [calendar dateFromComponents:components];
 	
-	FileInZipInfo *info= [[FileInZipInfo alloc] initWithName:name length:file_info.uncompressed_size level:level crypted:crypted size:file_info.compressed_size date:date crc32:file_info.crc];
+	ZipFileInfo *info= [[ZipFileInfo alloc] initWithName:name length:file_info.uncompressed_size level:level crypted:crypted size:file_info.compressed_size date:date crc32:file_info.crc];
 	return [info autorelease];
 }
 

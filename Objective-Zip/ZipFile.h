@@ -4,6 +4,7 @@
 //
 //  Created by Gianluca Bertani on 25/12/09.
 //  Copyright 2009-10 Flying Dolphin Studio. All rights reserved.
+//	Modified by Geoff Pado on 29/10/10.
 //
 //  Redistribution and use in source and binary forms, with or without 
 //  modification, are permitted provided that the following conditions 
@@ -52,7 +53,7 @@ typedef enum {
 
 @class ZipReadStream;
 @class ZipWriteStream;
-@class FileInZipInfo;
+@class ZipFileInfo;
 
 @interface ZipFile : NSObject {
 	NSString *_fileName;
@@ -76,7 +77,7 @@ typedef enum {
 - (BOOL) goToNextFileInZip;
 - (BOOL) locateFileInZip:(NSString *)fileNameInZip;
 
-- (FileInZipInfo *) getCurrentFileInZipInfo;
+- (ZipFileInfo *) getCurrentFileInZipInfo;
 
 - (ZipReadStream *) readCurrentFileInZip;
 - (ZipReadStream *) readCurrentFileInZipWithPassword:(NSString *)password;

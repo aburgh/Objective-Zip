@@ -1,0 +1,137 @@
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib
+END
+inffast.h
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/inffast.h
+END
+inffixed.h
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/inffixed.h
+END
+deflate.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/deflate.c
+END
+zlib.h
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/zlib.h
+END
+zutil.c
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/zutil.c
+END
+gzio.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/gzio.c
+END
+deflate.h
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/deflate.h
+END
+crc32.c
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/crc32.c
+END
+zutil.h
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/zutil.h
+END
+inftrees.c
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/inftrees.c
+END
+crc32.h
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/crc32.h
+END
+trees.c
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/trees.c
+END
+inflate.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/inflate.c
+END
+uncompr.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/uncompr.c
+END
+zconf.h
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/zconf.h
+END
+inftrees.h
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/inftrees.h
+END
+trees.h
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/trees.h
+END
+inflate.h
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/inflate.h
+END
+inffast.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/inffast.c
+END
+compress.c
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/compress.c
+END
+adler32.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/adler32.c
+END
+infback.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/7/trunk/Objective-Zip/ZLib/infback.c
+END

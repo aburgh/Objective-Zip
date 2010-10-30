@@ -64,23 +64,23 @@ typedef enum {
 	unzFile _unzFile;
 }
 
-- (id) initWithFileName:(NSString *)fileName mode:(ZipFileMode)mode;
+- (id)initWithFileName:(NSString *)fileName mode:(ZipFileMode)mode;
 
-- (ZipWriteStream *) writeFileInZipWithName:(NSString *)fileNameInZip compressionLevel:(ZipCompressionLevel)compressionLevel;
-- (ZipWriteStream *) writeFileInZipWithName:(NSString *)fileNameInZip fileDate:(NSDate *)fileDate compressionLevel:(ZipCompressionLevel)compressionLevel;
-- (ZipWriteStream *) writeFileInZipWithName:(NSString *)fileNameInZip fileDate:(NSDate *)fileDate compressionLevel:(ZipCompressionLevel)compressionLevel password:(NSString *)password crc32:(NSUInteger)crc32;
+- (ZipWriteStream *)writeFileInZipWithName:(NSString *)fileNameInZip compressionLevel:(ZipCompressionLevel)compressionLevel error:(NSError **)writeFileError;
+- (ZipWriteStream *)writeFileInZipWithName:(NSString *)fileNameInZip fileDate:(NSDate *)fileDate compressionLevel:(ZipCompressionLevel)compressionLevel error:(NSError **)writeFileError;
+- (ZipWriteStream *)writeFileInZipWithName:(NSString *)fileNameInZip fileDate:(NSDate *)fileDate compressionLevel:(ZipCompressionLevel)compressionLevel password:(NSString *)password crc32:(NSUInteger)crc32 error:(NSError **)writeFileError;
 
-- (NSUInteger) numFilesInZip;
-- (NSArray *) listFileInZipInfos;
+- (NSUInteger)filesCount;
+- (NSArray *)containedFiles;
 
-- (void) goToFirstFileInZip;
-- (BOOL) goToNextFileInZip;
-- (BOOL) locateFileInZip:(NSString *)fileNameInZip;
+- (BOOL)goToFirstFileInZip:(NSError **)readFileError;
+- (BOOL)goToNextFileInZip:(NSError **)readFileError;
+- (BOOL)locateFileInZip:(NSString *)fileNameInZip error:(NSError **)readFileError;
 
-- (ZipFileInfo *) getCurrentFileInZipInfo;
+- (ZipFileInfo *)getCurrentFileInZipInfo:(NSError **)readFileError;
 
-- (ZipReadStream *) readCurrentFileInZip;
-- (ZipReadStream *) readCurrentFileInZipWithPassword:(NSString *)password;
+- (ZipReadStream *)readCurrentFileInZip:(NSError **)readFileError;
+- (ZipReadStream *)readCurrentFileInZipWithPassword:(NSString *)password error:(NSError **)readFileError;
 
 - (void) close;
 

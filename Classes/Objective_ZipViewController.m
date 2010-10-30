@@ -76,7 +76,8 @@
 
 		[self performSelectorOnMainThread:@selector(log:) withObject:@"Adding first file..." waitUntilDone:YES];
 		
-		ZipWriteStream *stream1= [zipFile writeFileInZipWithName:@"abc.txt" fileDate:[NSDate dateWithTimeIntervalSinceNow:-86400.0] compressionLevel:ZipCompressionLevelBest];
+		NSError *error;
+		ZipWriteStream *stream1= [zipFile writeFileInZipWithName:@"abc.txt" fileDate:[NSDate dateWithTimeIntervalSinceNow:-86400.0] compressionLevel:ZipCompressionLevelBest error:&error];
 
 		[self performSelectorOnMainThread:@selector(log:) withObject:@"Writing to first file's stream..." waitUntilDone:YES];
 
@@ -89,7 +90,7 @@
 		
 		[self performSelectorOnMainThread:@selector(log:) withObject:@"Adding second file..." waitUntilDone:YES];
 		
-		ZipWriteStream *stream2= [zipFile writeFileInZipWithName:@"x/y/z/xyz.txt" compressionLevel:ZipCompressionLevelNone];
+		ZipWriteStream *stream2= [zipFile writeFileInZipWithName:@"x/y/z/xyz.txt" compressionLevel:ZipCompressionLevelNone error:&error];
 		
 		[self performSelectorOnMainThread:@selector(log:) withObject:@"Writing to second file's stream..." waitUntilDone:YES];
 		
@@ -110,7 +111,7 @@
 		
 		[self performSelectorOnMainThread:@selector(log:) withObject:@"Reading file infos..." waitUntilDone:YES];
 		
-		NSArray *infos= [unzipFile listFileInZipInfos];
+		NSArray *infos= [unzipFile containedFiles];
 		for (ZipFileInfo *info in infos) {
 			NSString *fileInfo= [NSString stringWithFormat:@"- %@ %@ %d (%d)", info.name, info.date, info.size, info.level];
 			[self performSelectorOnMainThread:@selector(log:) withObject:fileInfo waitUntilDone:YES];
@@ -118,8 +119,8 @@
 		
 		[self performSelectorOnMainThread:@selector(log:) withObject:@"Opening first file..." waitUntilDone:YES];
 		
-		[unzipFile goToFirstFileInZip];
-		ZipReadStream *read1= [unzipFile readCurrentFileInZip];
+		[unzipFile goToFirstFileInZip:&error];
+		ZipReadStream *read1= [unzipFile readCurrentFileInZip:&error];
 		
 		[self performSelectorOnMainThread:@selector(log:) withObject:@"Reading from first file's stream..." waitUntilDone:YES];
 		
@@ -144,8 +145,8 @@
 		
 		[self performSelectorOnMainThread:@selector(log:) withObject:@"Opening second file..." waitUntilDone:YES];
 
-		[unzipFile goToNextFileInZip];
-		ZipReadStream *read2= [unzipFile readCurrentFileInZip];
+		[unzipFile goToNextFileInZip:&error];
+		ZipReadStream *read2= [unzipFile readCurrentFileInZip:&error];
 
 		[self performSelectorOnMainThread:@selector(log:) withObject:@"Reading from second file's stream..." waitUntilDone:YES];
 		

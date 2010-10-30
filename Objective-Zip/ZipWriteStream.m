@@ -32,13 +32,12 @@
 //
 
 #import "ZipWriteStream.h"
-#import "ZipException.h"
 
 #include "zip.h"
 
+static NSString *ZipWriteErrorDomain = @"ZipWriteErrorDomain";
 
 @implementation ZipWriteStream
-
 
 - (id) initWithZipFileStruct:(zipFile)zipFile fileNameInZip:(NSString *)fileNameInZip {
 	if (self= [super init]) {
@@ -49,19 +48,21 @@
 	return self;
 }
 
-- (void) writeData:(NSData *)data {
-	int err= zipWriteInFileInZip(_zipFile, [data bytes], [data length]);
+- (void)writeData:(NSData *)data error:(NSError **)writeError
+{
+	int err = zipWriteInFileInZip(_zipFile, [data bytes], [data length]);
 	if (err < 0) {
-		NSString *reason= [NSString stringWithFormat:@"Error in writing '%@' in the zipfile", _fileNameInZip];
-		@throw [[[ZipException alloc] initWithError:err reason:reason] autorelease];
+		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in writing '%@' in the zipfile", _fileNameInZip], NSLocalizedDescriptionKey, nil];
+		*writeError = [NSError errorWithDomain:ZipWriteErrorDomain code:1 userInfo:errorDictionary];
 	}
 }
 
-- (void) finishedWriting {
+- (void)finishedWritingWithError:(NSError **)writeError
+{
 	int err= zipCloseFileInZip(_zipFile);
 	if (err != ZIP_OK) {
-		NSString *reason= [NSString stringWithFormat:@"Error in closing '%@' in the zipfile", _fileNameInZip];
-		@throw [[[ZipException alloc] initWithError:err reason:reason] autorelease];
+		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in closing '%@' in the zipfile", _fileNameInZip], NSLocalizedDescriptionKey, nil];
+		*writeError = [NSError errorWithDomain:ZipWriteErrorDomain code:0 userInfo:errorDictionary];
 	}
 }
 

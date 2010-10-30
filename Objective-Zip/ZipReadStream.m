@@ -32,10 +32,10 @@
 //
 
 #import "ZipReadStream.h"
-#import "ZipException.h"
 
 #include "unzip.h"
 
+static NSString *ZipReadErrorDomain = @"ZipReadErrorDomain";
 
 @implementation ZipReadStream
 
@@ -49,21 +49,22 @@
 	return self;
 }
 
-- (NSUInteger) readDataWithBuffer:(NSMutableData *)buffer {
+- (NSUInteger)readDataWithBuffer:(NSMutableData *)buffer error:(NSError **)readError
+{
 	int err= unzReadCurrentFile(_unzFile, [buffer mutableBytes], [buffer length]);
 	if (err < 0) {
-		NSString *reason= [NSString stringWithFormat:@"Error in reading '%@' in the zipfile", _fileNameInZip];
-		@throw [[[ZipException alloc] initWithError:err reason:reason] autorelease];
+		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in reading '%@' in the zipfile", _fileNameInZip], NSLocalizedDescriptionKey, nil];
+		*readError = [NSError errorWithDomain:ZipReadErrorDomain code:1 userInfo:errorDictionary];
 	}
 	
 	return err;
 }
 
-- (void) finishedReading {
+- (void)finishedReadingWithError:(NSError **)readError {
 	int err= unzCloseCurrentFile(_unzFile);
 	if (err != UNZ_OK) {
-		NSString *reason= [NSString stringWithFormat:@"Error in closing '%@' in the zipfile", _fileNameInZip];
-		@throw [[[ZipException alloc] initWithError:err reason:reason] autorelease];
+		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in closing '%@' in the zipfile", _fileNameInZip], NSLocalizedDescriptionKey, nil];
+		*readError = [NSError errorWithDomain:ZipReadErrorDomain code:0 userInfo:errorDictionary];
 	}
 }
 

@@ -31,7 +31,6 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ZipException.h"
 #import "ZipFile.h"
 #import "ZipFileInfo.h"
 #import "ZipReadStream.h"

@@ -21,7 +21,6 @@
 		8C6D352F10E56A9000B63EFA /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 8C6D352910E56A9000B63EFA /* unzip.c */; };
 		8C6D353010E56A9000B63EFA /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 8C6D352B10E56A9000B63EFA /* zip.c */; };
 		8C6D354010E56BD300B63EFA /* ZipFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C6D353F10E56BD300B63EFA /* ZipFile.m */; };
-		8C6D356B10E56F4D00B63EFA /* ZipException.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C6D356A10E56F4D00B63EFA /* ZipException.m */; };
 		8C6D357610E5797600B63EFA /* ZipWriteStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C6D357510E5797600B63EFA /* ZipWriteStream.m */; };
 		8C83F49510E7CBCB002FB3CB /* ZipFileInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C83F49410E7CBCB002FB3CB /* ZipFileInfo.m */; };
 		8C8F2D3A10EBC94B00F75833 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C8F2D3910EBC94B00F75833 /* Default.png */; };
@@ -55,8 +54,6 @@
 		8C6D352C10E56A9000B63EFA /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zip.h; path = MiniZip/zip.h; sourceTree = "<group>"; };
 		8C6D353E10E56BD300B63EFA /* ZipFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZipFile.h; path = "Objective-Zip/ZipFile.h"; sourceTree = "<group>"; };
 		8C6D353F10E56BD300B63EFA /* ZipFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZipFile.m; path = "Objective-Zip/ZipFile.m"; sourceTree = "<group>"; };
-		8C6D356910E56F4D00B63EFA /* ZipException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZipException.h; path = "Objective-Zip/ZipException.h"; sourceTree = "<group>"; };
-		8C6D356A10E56F4D00B63EFA /* ZipException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZipException.m; path = "Objective-Zip/ZipException.m"; sourceTree = "<group>"; };
 		8C6D357410E5797600B63EFA /* ZipWriteStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZipWriteStream.h; path = "Objective-Zip/ZipWriteStream.h"; sourceTree = "<group>"; };
 		8C6D357510E5797600B63EFA /* ZipWriteStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZipWriteStream.m; path = "Objective-Zip/ZipWriteStream.m"; sourceTree = "<group>"; };
 		8C83F49310E7CBCB002FB3CB /* ZipFileInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZipFileInfo.h; path = "Objective-Zip/ZipFileInfo.h"; sourceTree = "<group>"; };
@@ -169,8 +166,6 @@
 			children = (
 				8C6D353E10E56BD300B63EFA /* ZipFile.h */,
 				8C6D353F10E56BD300B63EFA /* ZipFile.m */,
-				8C6D356910E56F4D00B63EFA /* ZipException.h */,
-				8C6D356A10E56F4D00B63EFA /* ZipException.m */,
 				8C6D357410E5797600B63EFA /* ZipWriteStream.h */,
 				8C6D357510E5797600B63EFA /* ZipWriteStream.m */,
 				8C83F49310E7CBCB002FB3CB /* ZipFileInfo.h */,
@@ -253,7 +248,6 @@
 				8C6D352F10E56A9000B63EFA /* unzip.c in Sources */,
 				8C6D353010E56A9000B63EFA /* zip.c in Sources */,
 				8C6D354010E56BD300B63EFA /* ZipFile.m in Sources */,
-				8C6D356B10E56F4D00B63EFA /* ZipException.m in Sources */,
 				8C6D357610E5797600B63EFA /* ZipWriteStream.m in Sources */,
 				8C83F49510E7CBCB002FB3CB /* ZipFileInfo.m in Sources */,
 				8CBE431810E95FA300AC9ED3 /* ZipReadStream.m in Sources */,

@@ -33,7 +33,6 @@
 //
 
 #import "ZipFile.h"
-#import "ZipException.h"
 #import "ZipReadStream.h"
 #import "ZipWriteStream.h"
 #import "ZipFileInfo.h"

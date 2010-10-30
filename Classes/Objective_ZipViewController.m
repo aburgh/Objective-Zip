@@ -66,126 +66,114 @@
 - (void) test {
     NSAutoreleasePool *pool= [[NSAutoreleasePool alloc] init];
 
-	@try {
-		NSString *documentsDir= [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
-		NSString *filePath= [documentsDir stringByAppendingPathComponent:@"test.zip"];
+	NSString *documentsDir= [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+	NSString *filePath= [documentsDir stringByAppendingPathComponent:@"test.zip"];
 
-		[self performSelectorOnMainThread:@selector(log:) withObject:@"Opening zip file for writing..." waitUntilDone:YES];
-		
-		ZipFile *zipFile= [[ZipFile alloc] initWithFileName:filePath mode:ZipFileModeCreate];
+	[self performSelectorOnMainThread:@selector(log:) withObject:@"Opening zip file for writing..." waitUntilDone:YES];
+	
+	ZipFile *zipFile= [[ZipFile alloc] initWithFileName:filePath mode:ZipFileModeCreate];
 
-		[self performSelectorOnMainThread:@selector(log:) withObject:@"Adding first file..." waitUntilDone:YES];
-		
-		NSError *error;
-		ZipWriteStream *stream1= [zipFile writeFileInZipWithName:@"abc.txt" fileDate:[NSDate dateWithTimeIntervalSinceNow:-86400.0] compressionLevel:ZipCompressionLevelBest error:&error];
+	[self performSelectorOnMainThread:@selector(log:) withObject:@"Adding first file..." waitUntilDone:YES];
+	
+	NSError *error;
+	ZipWriteStream *stream1= [zipFile writeFileInZipWithName:@"abc.txt" fileDate:[NSDate dateWithTimeIntervalSinceNow:-86400.0] compressionLevel:ZipCompressionLevelBest error:&error];
 
-		[self performSelectorOnMainThread:@selector(log:) withObject:@"Writing to first file's stream..." waitUntilDone:YES];
+	[self performSelectorOnMainThread:@selector(log:) withObject:@"Writing to first file's stream..." waitUntilDone:YES];
 
-		NSString *text= @"abc";
-		[stream1 writeData:[text dataUsingEncoding:NSUTF8StringEncoding]];
+	NSString *text= @"abc";
+	[stream1 writeData:[text dataUsingEncoding:NSUTF8StringEncoding] error:&error];
 
-		[self performSelectorOnMainThread:@selector(log:) withObject:@"Closing first file's stream..." waitUntilDone:YES];
-		
-		[stream1 finishedWriting];
-		
-		[self performSelectorOnMainThread:@selector(log:) withObject:@"Adding second file..." waitUntilDone:YES];
-		
-		ZipWriteStream *stream2= [zipFile writeFileInZipWithName:@"x/y/z/xyz.txt" compressionLevel:ZipCompressionLevelNone error:&error];
-		
-		[self performSelectorOnMainThread:@selector(log:) withObject:@"Writing to second file's stream..." waitUntilDone:YES];
-		
-		NSString *text2= @"XYZ";
-		[stream2 writeData:[text2 dataUsingEncoding:NSUTF8StringEncoding]];
-		
-		[self performSelectorOnMainThread:@selector(log:) withObject:@"Closing second file's stream..." waitUntilDone:YES];
-		
-		[stream2 finishedWriting];
-		
-		[self performSelectorOnMainThread:@selector(log:) withObject:@"Closing zip file..." waitUntilDone:YES];
-		
-		[zipFile close];
-		
-		[self performSelectorOnMainThread:@selector(log:) withObject:@"Opening zip file for reading..." waitUntilDone:YES];
-		
-		ZipFile *unzipFile= [[ZipFile alloc] initWithFileName:filePath mode:ZipFileModeUnzip];
-		
-		[self performSelectorOnMainThread:@selector(log:) withObject:@"Reading file infos..." waitUntilDone:YES];
-		
-		NSArray *infos= [unzipFile containedFiles];
-		for (ZipFileInfo *info in infos) {
-			NSString *fileInfo= [NSString stringWithFormat:@"- %@ %@ %d (%d)", info.name, info.date, info.size, info.level];
-			[self performSelectorOnMainThread:@selector(log:) withObject:fileInfo waitUntilDone:YES];
-		}
-		
-		[self performSelectorOnMainThread:@selector(log:) withObject:@"Opening first file..." waitUntilDone:YES];
-		
-		[unzipFile goToFirstFileInZip:&error];
-		ZipReadStream *read1= [unzipFile readCurrentFileInZip:&error];
-		
-		[self performSelectorOnMainThread:@selector(log:) withObject:@"Reading from first file's stream..." waitUntilDone:YES];
-		
-		NSMutableData *data1= [[[NSMutableData alloc] initWithLength:256] autorelease];
-		int bytesRead1= [read1 readDataWithBuffer:data1];
-		
-		BOOL ok= NO;
-		if (bytesRead1 == 3) {
-			NSString *fileText1= [[[NSString alloc] initWithBytes:[data1 bytes] length:bytesRead1 encoding:NSUTF8StringEncoding] autorelease];
-			if ([fileText1 isEqualToString:@"abc"])
-				ok= YES;
-		}
-		
-		if (ok)
-			[self performSelectorOnMainThread:@selector(log:) withObject:@"Content of first file is OK" waitUntilDone:YES];
-		else
-			[self performSelectorOnMainThread:@selector(log:) withObject:@"Content of first file is WRONG" waitUntilDone:YES];
-			
-		[self performSelectorOnMainThread:@selector(log:) withObject:@"Closing first file's stream..." waitUntilDone:YES];
-		
-		[read1 finishedReading];
-		
-		[self performSelectorOnMainThread:@selector(log:) withObject:@"Opening second file..." waitUntilDone:YES];
-
-		[unzipFile goToNextFileInZip:&error];
-		ZipReadStream *read2= [unzipFile readCurrentFileInZip:&error];
-
-		[self performSelectorOnMainThread:@selector(log:) withObject:@"Reading from second file's stream..." waitUntilDone:YES];
-		
-		NSMutableData *data2= [[[NSMutableData alloc] initWithLength:256] autorelease];
-		int bytesRead2= [read2 readDataWithBuffer:data2];
-		
-		ok= NO;
-		if (bytesRead2 == 3) {
-			NSString *fileText2= [[[NSString alloc] initWithBytes:[data2 bytes] length:bytesRead2 encoding:NSUTF8StringEncoding] autorelease];
-			if ([fileText2 isEqualToString:@"XYZ"])
-				ok= YES;
-		}
-		
-		if (ok)
-			[self performSelectorOnMainThread:@selector(log:) withObject:@"Content of second file is OK" waitUntilDone:YES];
-		else
-			[self performSelectorOnMainThread:@selector(log:) withObject:@"Content of second file is WRONG" waitUntilDone:YES];
-		
-		[self performSelectorOnMainThread:@selector(log:) withObject:@"Closing second file's stream..." waitUntilDone:YES];
-		
-		[read2 finishedReading];
-		
-		[self performSelectorOnMainThread:@selector(log:) withObject:@"Closing zip file..." waitUntilDone:YES];
-		
-		[unzipFile close];
-		
-		[self performSelectorOnMainThread:@selector(log:) withObject:@"Test terminated succesfully" waitUntilDone:YES];
-		
-	} @catch (ZipException *ze) {
-		[self performSelectorOnMainThread:@selector(log:) withObject:@"Caught a ZipException (see logs), terminating..." waitUntilDone:YES];
-		
-		NSLog(@"ZipException caught: %d - %@", ze.error, [ze reason]);
-
-	} @catch (id e) {
-		[self performSelectorOnMainThread:@selector(log:) withObject:@"Caught a generic exception (see logs), terminating..." waitUntilDone:YES];
-
-		NSLog(@"Exception caught: %@ - %@", [[e class] description], [e description]);
+	[self performSelectorOnMainThread:@selector(log:) withObject:@"Closing first file's stream..." waitUntilDone:YES];
+	
+	[stream1 finishedWritingWithError:&error];
+	
+	[self performSelectorOnMainThread:@selector(log:) withObject:@"Adding second file..." waitUntilDone:YES];
+	
+	ZipWriteStream *stream2= [zipFile writeFileInZipWithName:@"x/y/z/xyz.txt" compressionLevel:ZipCompressionLevelNone error:&error];
+	
+	[self performSelectorOnMainThread:@selector(log:) withObject:@"Writing to second file's stream..." waitUntilDone:YES];
+	
+	NSString *text2= @"XYZ";
+	[stream2 writeData:[text2 dataUsingEncoding:NSUTF8StringEncoding] error:&error];
+	
+	[self performSelectorOnMainThread:@selector(log:) withObject:@"Closing second file's stream..." waitUntilDone:YES];
+	
+	[stream2 finishedWritingWithError:&error];
+	
+	[self performSelectorOnMainThread:@selector(log:) withObject:@"Closing zip file..." waitUntilDone:YES];
+	
+	[zipFile close];
+	
+	[self performSelectorOnMainThread:@selector(log:) withObject:@"Opening zip file for reading..." waitUntilDone:YES];
+	
+	ZipFile *unzipFile= [[ZipFile alloc] initWithFileName:filePath mode:ZipFileModeUnzip];
+	
+	[self performSelectorOnMainThread:@selector(log:) withObject:@"Reading file infos..." waitUntilDone:YES];
+	
+	NSArray *infos= [unzipFile containedFiles];
+	for (ZipFileInfo *info in infos) {
+		NSString *fileInfo= [NSString stringWithFormat:@"- %@ %@ %d (%d)", info.name, info.date, info.size, info.level];
+		[self performSelectorOnMainThread:@selector(log:) withObject:fileInfo waitUntilDone:YES];
 	}
 	
+	[self performSelectorOnMainThread:@selector(log:) withObject:@"Opening first file..." waitUntilDone:YES];
+	
+	[unzipFile goToFirstFileInZip:&error];
+	ZipReadStream *read1= [unzipFile readCurrentFileInZip:&error];
+	
+	[self performSelectorOnMainThread:@selector(log:) withObject:@"Reading from first file's stream..." waitUntilDone:YES];
+	
+	NSMutableData *data1= [[[NSMutableData alloc] initWithLength:256] autorelease];
+	int bytesRead1= [read1 readDataWithBuffer:data1 error:&error];
+	
+	BOOL ok= NO;
+	if (bytesRead1 == 3) {
+		NSString *fileText1= [[[NSString alloc] initWithBytes:[data1 bytes] length:bytesRead1 encoding:NSUTF8StringEncoding] autorelease];
+		if ([fileText1 isEqualToString:@"abc"])
+			ok= YES;
+	}
+	
+	if (ok)
+		[self performSelectorOnMainThread:@selector(log:) withObject:@"Content of first file is OK" waitUntilDone:YES];
+	else
+		[self performSelectorOnMainThread:@selector(log:) withObject:@"Content of first file is WRONG" waitUntilDone:YES];
+		
+	[self performSelectorOnMainThread:@selector(log:) withObject:@"Closing first file's stream..." waitUntilDone:YES];
+	
+	[read1 finishedReadingWithError:&error];
+	
+	[self performSelectorOnMainThread:@selector(log:) withObject:@"Opening second file..." waitUntilDone:YES];
+
+	[unzipFile goToNextFileInZip:&error];
+	ZipReadStream *read2= [unzipFile readCurrentFileInZip:&error];
+
+	[self performSelectorOnMainThread:@selector(log:) withObject:@"Reading from second file's stream..." waitUntilDone:YES];
+	
+	NSMutableData *data2= [[[NSMutableData alloc] initWithLength:256] autorelease];
+	int bytesRead2= [read2 readDataWithBuffer:data2 error:&error];
+	
+	ok= NO;
+	if (bytesRead2 == 3) {
+		NSString *fileText2= [[[NSString alloc] initWithBytes:[data2 bytes] length:bytesRead2 encoding:NSUTF8StringEncoding] autorelease];
+		if ([fileText2 isEqualToString:@"XYZ"])
+			ok= YES;
+	}
+	
+	if (ok)
+		[self performSelectorOnMainThread:@selector(log:) withObject:@"Content of second file is OK" waitUntilDone:YES];
+	else
+		[self performSelectorOnMainThread:@selector(log:) withObject:@"Content of second file is WRONG" waitUntilDone:YES];
+	
+	[self performSelectorOnMainThread:@selector(log:) withObject:@"Closing second file's stream..." waitUntilDone:YES];
+	
+	[read2 finishedReadingWithError:&error];
+	
+	[self performSelectorOnMainThread:@selector(log:) withObject:@"Closing zip file..." waitUntilDone:YES];
+	
+	[unzipFile close];
+	
+	[self performSelectorOnMainThread:@selector(log:) withObject:@"Test terminated succesfully" waitUntilDone:YES];
+
 	[pool drain];
 }
 

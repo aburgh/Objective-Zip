@@ -115,7 +115,7 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 
 - (NSUInteger)filesCount
 {
-	if (_mode == ZipFileModeUnzip)
+	if (_mode != ZipFileModeUnzip)
 		return -1;
 
 	unz_global_info gi;

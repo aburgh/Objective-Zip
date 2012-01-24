@@ -33,17 +33,16 @@
 
 #import <Foundation/Foundation.h>
 
-#include "zip.h"
-
+struct   zipFile__;
 
 @interface ZipWriteStream : NSObject {
 	NSString *_fileNameInZip;
 
 @private
-	zipFile _zipFile;
+	struct zipFile__ * _zipFile;
 }
 
-- (id) initWithZipFileStruct:(zipFile)zipFile fileNameInZip:(NSString *)fileNameInZip;
+- (id) initWithZipFileStruct:(struct zipFile__ *)zipFile fileNameInZip:(NSString *)fileNameInZip;
 
 - (void)writeData:(NSData *)data error:(NSError **)writeError;
 - (void)finishedWritingWithError:(NSError **)writeError;

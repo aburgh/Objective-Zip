@@ -40,7 +40,7 @@ static NSString *ZipReadErrorDomain = @"ZipReadErrorDomain";
 @implementation ZipReadStream
 
 
-- (id) initWithUnzFileStruct:(unzFile)unzFile fileNameInZip:(NSString *)fileNameInZip {
+- (id) initWithUnzFileStruct:(struct unzFile__ *)unzFile fileNameInZip:(NSString *)fileNameInZip {
 	if (self = [super init]) {
 		_unzFile = unzFile;
 		_fileNameInZip = fileNameInZip;

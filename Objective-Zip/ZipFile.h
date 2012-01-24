@@ -34,9 +34,8 @@
 
 #import <Foundation/Foundation.h>
 
-#include "zip.h"
-#include "unzip.h"
-
+struct zipFile__;
+struct unzFile__;
 
 typedef enum {
 	ZipFileModeUnzip,
@@ -60,8 +59,8 @@ typedef enum {
 	ZipFileMode _mode;
 
 @private
-	zipFile _zipFile;
-	unzFile _unzFile;
+	struct zipFile__ * _zipFile;
+	struct unzFile__ * _unzFile;
 }
 
 - (id)initWithFileName:(NSString *)fileName mode:(ZipFileMode)mode;

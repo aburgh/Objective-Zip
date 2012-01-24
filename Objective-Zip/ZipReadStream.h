@@ -33,17 +33,16 @@
 
 #import <Foundation/Foundation.h>
 
-#include "unzip.h"
-
+struct unzFile__;
 
 @interface ZipReadStream : NSObject {
 	NSString *_fileNameInZip;
 	
 @private
-	unzFile _unzFile;
+	struct unzFile__ * _unzFile;
 }
 
-- (id) initWithUnzFileStruct:(unzFile)unzFile fileNameInZip:(NSString *)fileNameInZip;
+- (id) initWithUnzFileStruct:(struct unzFile__ *)unzFile fileNameInZip:(NSString *)fileNameInZip;
 
 - (NSData *)readDataOfLength:(NSUInteger)length error:(NSError **)readError;
 - (void)finishedReadingWithError:(NSError **)readError;

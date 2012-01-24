@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "96D49C8014CF160000C927AA"
-               BuildableName = "libObjective-Zip arm copy.a"
+               BuildableName = "libObjective-Zip.a"
                BlueprintName = "Objective-Zip Intel"
                ReferencedContainer = "container:Objective-Zip.xcodeproj">
             </BuildableReference>

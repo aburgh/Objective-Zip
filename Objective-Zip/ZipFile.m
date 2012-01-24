@@ -98,12 +98,12 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 	NSCalendar *calendar = [NSCalendar currentCalendar];
 	NSDateComponents *date = [calendar components:(NSSecondCalendarUnit | NSMinuteCalendarUnit | NSHourCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:fileDate];
 	zip_fileinfo zi;
-	zi.tmz_date.tm_sec = [date second];
-	zi.tmz_date.tm_min = [date minute];
-	zi.tmz_date.tm_hour = [date hour];
-	zi.tmz_date.tm_mday = [date day];
-	zi.tmz_date.tm_mon = [date month] -1;
-	zi.tmz_date.tm_year = [date year];
+	zi.tmz_date.tm_sec = (uInt) [date second];
+	zi.tmz_date.tm_min = (uInt) [date minute];
+	zi.tmz_date.tm_hour = (uInt) [date hour];
+	zi.tmz_date.tm_mday = (uInt) [date day];
+	zi.tmz_date.tm_mon = (uInt) [date month] -1;
+	zi.tmz_date.tm_year = (uInt) [date year];
 	zi.internal_fa = 0;
 	zi.external_fa = 0;
 	zi.dosDate = 0;
@@ -135,18 +135,18 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 
 - (NSArray *)containedFiles
 {
-	int num = [self filesCount];
+	NSUInteger num = [self filesCount];
 	if (num < 1)
 		return [[[NSArray alloc] init] autorelease];
 	
 	NSMutableArray *files = [[[NSMutableArray alloc] initWithCapacity:num] autorelease];
 
 	[self goToFirstFileInZip:nil];
-	for (int i= 0; i < num; i++) {
+	for (NSUInteger i = 0; i < num; i++) {
 		ZipFileInfo *info = [self getCurrentFileInZipInfo:nil];
 		[files addObject:info];
 
-		if ((i +1) < num)
+		if ((i + 1) < num)
 			[self goToNextFileInZip:nil];
 	}
 

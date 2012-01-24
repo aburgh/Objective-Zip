@@ -50,7 +50,7 @@ static NSString *ZipWriteErrorDomain = @"ZipWriteErrorDomain";
 
 - (BOOL)writeData:(NSData *)data error:(NSError **)writeError
 {
-	int err = zipWriteInFileInZip(_zipFile, [data bytes], [data length]);
+	int err = zipWriteInFileInZip(_zipFile, [data bytes], (unsigned) [data length]);
 	if (err < 0) {
 		if (writeError) {
 			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in writing '%@' in the zipfile", _fileNameInZip], NSLocalizedDescriptionKey, nil];

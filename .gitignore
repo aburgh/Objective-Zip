@@ -1,5 +1,5 @@
 .DS_Store
-build/
-Objective-Zip.xcodeproj/*.mode1v3
-Objective-Zip.xcodeproj/*.perspectivev3
-Objective-Zip.xcodeproj/*.pbxuser
+*.mode1v3
+*.pbxuser
+*.perspectivev3
+xcuserdata

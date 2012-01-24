@@ -104,9 +104,7 @@
 			children = (
 				8C6D353B10E56BA400B63EFA /* Objective-Zip */,
 				8C6D350110E56A4B00B63EFA /* MiniZip */,
-				080E96DDFE201D6D7F000001 /* Classes */,
-				29B97315FDCFA39411CA2CEA /* Other Sources */,
-				29B97317FDCFA39411CA2CEA /* Resources */,
+				96D49C1A14CEE05D00C927AA /* TestApp */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -175,6 +173,16 @@
 				6C12FB0A127B5CA300D74DA1 /* Objective-Zip.h */,
 			);
 			name = "Objective-Zip";
+			sourceTree = "<group>";
+		};
+		96D49C1A14CEE05D00C927AA /* TestApp */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+			);
+			path = TestApp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

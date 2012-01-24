@@ -40,9 +40,9 @@ static NSString *ZipWriteErrorDomain = @"ZipWriteErrorDomain";
 @implementation ZipWriteStream
 
 - (id) initWithZipFileStruct:(zipFile)zipFile fileNameInZip:(NSString *)fileNameInZip {
-	if (self= [super init]) {
-		_zipFile= zipFile;
-		_fileNameInZip= fileNameInZip;
+	if (self = [super init]) {
+		_zipFile = zipFile;
+		_fileNameInZip = fileNameInZip;
 	}
 	
 	return self;
@@ -59,7 +59,7 @@ static NSString *ZipWriteErrorDomain = @"ZipWriteErrorDomain";
 
 - (void)finishedWritingWithError:(NSError **)writeError
 {
-	int err= zipCloseFileInZip(_zipFile);
+	int err = zipCloseFileInZip(_zipFile);
 	if (err != ZIP_OK) {
 		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in closing '%@' in the zipfile", _fileNameInZip], NSLocalizedDescriptionKey, nil];
 		*writeError = [NSError errorWithDomain:ZipWriteErrorDomain code:0 userInfo:errorDictionary];

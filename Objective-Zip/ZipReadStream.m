@@ -49,15 +49,19 @@ static NSString *ZipReadErrorDomain = @"ZipReadErrorDomain";
 	return self;
 }
 
-- (NSUInteger)readDataWithBuffer:(NSMutableData *)buffer error:(NSError **)readError
+- (NSData *)readDataOfLength:(NSUInteger)length error:(NSError **)readError
 {
-	int err = unzReadCurrentFile(_unzFile, [buffer mutableBytes], [buffer length]);
-	if (err < 0) {
+	NSMutableData *data = [NSMutableData dataWithLength:length];
+	
+	int bytes = unzReadCurrentFile(_unzFile, [data mutableBytes], (unsigned int)[data length]);
+	if (bytes < 0) {
 		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in reading '%@' in the zipfile", _fileNameInZip], NSLocalizedDescriptionKey, nil];
-		*readError = [NSError errorWithDomain:ZipReadErrorDomain code:1 userInfo:errorDictionary];
+		if (readError) *readError = [NSError errorWithDomain:ZipReadErrorDomain code:1 userInfo:errorDictionary];
+		return nil;
 	}
 	
-	return err;
+	[data setLength:bytes];
+	return data;
 }
 
 - (void)finishedReadingWithError:(NSError **)readError {

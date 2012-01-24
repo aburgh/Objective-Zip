@@ -123,12 +123,11 @@
 	
 	[self performSelectorOnMainThread:@selector(log:) withObject:@"Reading from first file's stream..." waitUntilDone:YES];
 	
-	NSMutableData *data1= [[[NSMutableData alloc] initWithLength:256] autorelease];
-	int bytesRead1= [read1 readDataWithBuffer:data1 error:&error];
+	NSData *data1 = [read1 readDataOfLength:256 error:&error];
 	
 	BOOL ok= NO;
-	if (bytesRead1 == 3) {
-		NSString *fileText1= [[[NSString alloc] initWithBytes:[data1 bytes] length:bytesRead1 encoding:NSUTF8StringEncoding] autorelease];
+	if (data1 && [data1 length] == 3) {
+		NSString *fileText1= [[[NSString alloc] initWithBytes:[data1 bytes] length:[data1 length] encoding:NSUTF8StringEncoding] autorelease];
 		if ([fileText1 isEqualToString:@"abc"])
 			ok= YES;
 	}
@@ -149,12 +148,10 @@
 
 	[self performSelectorOnMainThread:@selector(log:) withObject:@"Reading from second file's stream..." waitUntilDone:YES];
 	
-	NSMutableData *data2= [[[NSMutableData alloc] initWithLength:256] autorelease];
-	int bytesRead2= [read2 readDataWithBuffer:data2 error:&error];
-	
+	NSData *data2 = [read2 readDataOfLength:256 error:&error];	
 	ok= NO;
-	if (bytesRead2 == 3) {
-		NSString *fileText2= [[[NSString alloc] initWithBytes:[data2 bytes] length:bytesRead2 encoding:NSUTF8StringEncoding] autorelease];
+	if (data2 && [data2 length] == 3) {
+		NSString *fileText2= [[[NSString alloc] initWithBytes:[data2 bytes] length:[data2 length] encoding:NSUTF8StringEncoding] autorelease];
 		if ([fileText2 isEqualToString:@"XYZ"])
 			ok= YES;
 	}

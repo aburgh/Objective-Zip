@@ -351,8 +351,8 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Objective_Zip_Test_Prefix.pch;
-				INFOPLIST_FILE = "Objective_Zip_Test-Info.plist";
+				GCC_PREFIX_HEADER = TestApp/Objective_Zip_Test_Prefix.pch;
+				INFOPLIST_FILE = "TestApp/Objective_Zip_Test-Info.plist";
 				PRODUCT_NAME = "Objective-Zip Test";
 				SDKROOT = iphoneos;
 			};
@@ -364,8 +364,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Objective_Zip_Test_Prefix.pch;
-				INFOPLIST_FILE = "Objective_Zip_Test-Info.plist";
+				GCC_PREFIX_HEADER = TestApp/Objective_Zip_Test_Prefix.pch;
+				INFOPLIST_FILE = "TestApp/Objective_Zip_Test-Info.plist";
 				PRODUCT_NAME = "Objective-Zip Test";
 				SDKROOT = iphoneos;
 			};

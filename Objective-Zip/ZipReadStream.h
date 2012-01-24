@@ -45,6 +45,6 @@ struct unzFile__;
 - (id) initWithUnzFileStruct:(struct unzFile__ *)unzFile fileNameInZip:(NSString *)fileNameInZip;
 
 - (NSData *)readDataOfLength:(NSUInteger)length error:(NSError **)readError;
-- (void)finishedReadingWithError:(NSError **)readError;
+- (BOOL)finishedReadingWithError:(NSError **)readError;
 
 @end

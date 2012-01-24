@@ -66,14 +66,16 @@ static NSString *ZipReadErrorDomain = @"ZipReadErrorDomain";
 	return data;
 }
 
-- (void)finishedReadingWithError:(NSError **)readError {
+- (BOOL)finishedReadingWithError:(NSError **)readError {
 	int err = unzCloseCurrentFile(_unzFile);
 	if (err != UNZ_OK) {
 		if (readError) {
 			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in closing '%@' in the zipfile", _fileNameInZip], NSLocalizedDescriptionKey, nil];
 			*readError = [NSError errorWithDomain:ZipReadErrorDomain code:0 userInfo:errorDictionary];
 		}
+		return NO;
 	}
+	return YES;
 }
 
 

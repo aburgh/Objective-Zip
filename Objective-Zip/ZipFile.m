@@ -186,9 +186,15 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 	}
 	
 	int err = unzGoToNextFile(_unzFile);
-	if (err == UNZ_END_OF_LIST_OF_FILE)
-		return NO;
-
+	if (err == UNZ_END_OF_LIST_OF_FILE) {
+		if (readFileError) {
+			NSString *message = [NSString stringWithFormat:@"No more files in '%@'", _fileName];
+			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:message, NSLocalizedDescriptionKey, nil];
+			*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:UNZ_END_OF_LIST_OF_FILE userInfo:errorDictionary];
+		}
+	return NO;
+	}
+	
 	if (err != UNZ_OK) {
 		if (readFileError) {
 			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in going to next file in zip in '%@'", _fileName], NSLocalizedDescriptionKey, nil];
@@ -211,8 +217,14 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 	}
 	
 	int err = unzLocateFile(_unzFile, [fileNameInZip cStringUsingEncoding:NSUTF8StringEncoding], 1);
-	if (err == UNZ_END_OF_LIST_OF_FILE)
+	if (err == UNZ_END_OF_LIST_OF_FILE) {
+		if (readFileError) {
+			NSString *message = [NSString stringWithFormat:@"File '%@' not found in zip file '%@'", fileNameInZip, _fileName];
+			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:message, NSLocalizedDescriptionKey, nil];
+			*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:UNZ_END_OF_LIST_OF_FILE userInfo:errorDictionary];
+		}
 		return NO;
+	}
 
 	if (err != UNZ_OK) {
 		if (readFileError) {

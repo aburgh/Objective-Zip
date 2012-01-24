@@ -44,7 +44,7 @@ struct   zipFile__;
 
 - (id) initWithZipFileStruct:(struct zipFile__ *)zipFile fileNameInZip:(NSString *)fileNameInZip;
 
-- (void)writeData:(NSData *)data error:(NSError **)writeError;
-- (void)finishedWritingWithError:(NSError **)writeError;
+- (BOOL)writeData:(NSData *)data error:(NSError **)writeError;
+- (BOOL)finishedWritingWithError:(NSError **)writeError;
 
 @end

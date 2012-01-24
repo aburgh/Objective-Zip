@@ -55,8 +55,10 @@ static NSString *ZipReadErrorDomain = @"ZipReadErrorDomain";
 	
 	int bytes = unzReadCurrentFile(_unzFile, [data mutableBytes], (unsigned int)[data length]);
 	if (bytes < 0) {
-		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in reading '%@' in the zipfile", _fileNameInZip], NSLocalizedDescriptionKey, nil];
-		if (readError) *readError = [NSError errorWithDomain:ZipReadErrorDomain code:1 userInfo:errorDictionary];
+		if (readError) {
+			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in reading '%@' in the zipfile", _fileNameInZip], NSLocalizedDescriptionKey, nil];
+			*readError = [NSError errorWithDomain:ZipReadErrorDomain code:1 userInfo:errorDictionary];
+		}
 		return nil;
 	}
 	
@@ -67,8 +69,10 @@ static NSString *ZipReadErrorDomain = @"ZipReadErrorDomain";
 - (void)finishedReadingWithError:(NSError **)readError {
 	int err = unzCloseCurrentFile(_unzFile);
 	if (err != UNZ_OK) {
-		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in closing '%@' in the zipfile", _fileNameInZip], NSLocalizedDescriptionKey, nil];
-		*readError = [NSError errorWithDomain:ZipReadErrorDomain code:0 userInfo:errorDictionary];
+		if (readError) {
+			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in closing '%@' in the zipfile", _fileNameInZip], NSLocalizedDescriptionKey, nil];
+			*readError = [NSError errorWithDomain:ZipReadErrorDomain code:0 userInfo:errorDictionary];
+		}
 	}
 }
 

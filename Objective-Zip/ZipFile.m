@@ -88,8 +88,10 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 - (ZipWriteStream *)writeFileInZipWithName:(NSString *)fileNameInZip fileDate:(NSDate *)fileDate compressionLevel:(ZipCompressionLevel)compressionLevel password:(NSString *)password crc32:(NSUInteger)crc32 error:(NSError **)writeFileError
 {
 	if (_mode == ZipFileModeUnzip) {
+		if (writeFileError) {
 		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Operation not permitted with Unzip mode"], NSLocalizedDescriptionKey, nil];
 		*writeFileError = [NSError errorWithDomain:ZipFileErrorDomain code:1 userInfo:errorDictionary];
+		}
 		return nil;
 	}
 	
@@ -108,8 +110,11 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 	
 	int err = zipOpenNewFileInZip3(_zipFile, [fileNameInZip cStringUsingEncoding:NSUTF8StringEncoding], &zi, NULL, 0, NULL, 0, NULL, (compressionLevel != ZipCompressionLevelNone) ? Z_DEFLATED : 0, compressionLevel, 0, -MAX_WBITS, DEF_MEM_LEVEL, Z_DEFAULT_STRATEGY, [password cStringUsingEncoding:NSUTF8StringEncoding], crc32);
 	if (err != ZIP_OK) {
-		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in opening '%@' in zip file", fileNameInZip], NSLocalizedDescriptionKey, nil];
-		*writeFileError = [NSError errorWithDomain:ZipFileErrorDomain code:2 userInfo:errorDictionary];
+		if (writeFileError) {
+			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in opening '%@' in zip file", fileNameInZip], NSLocalizedDescriptionKey, nil];
+			*writeFileError = [NSError errorWithDomain:ZipFileErrorDomain code:2 userInfo:errorDictionary];
+		}
+		return nil;
 	}
 	
 	return [[[ZipWriteStream alloc] initWithZipFileStruct:_zipFile fileNameInZip:fileNameInZip] autorelease];
@@ -151,15 +156,19 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 - (BOOL)goToFirstFileInZip:(NSError **)readFileError
 {
 	if (_mode != ZipFileModeUnzip) {
-		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Operation not permitted without Unzip mode"], NSLocalizedDescriptionKey, nil];
-		*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:10 userInfo:errorDictionary];
+		if (readFileError) {
+			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Operation not permitted without Unzip mode"], NSLocalizedDescriptionKey, nil];
+			*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:10 userInfo:errorDictionary];
+		}
 		return NO;
 	}
 	
 	int err = unzGoToFirstFile(_unzFile);
 	if (err != UNZ_OK) {
-		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in going to first file in zip in '%@'", _fileName], NSLocalizedDescriptionKey, nil];
-		*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:11 userInfo:errorDictionary];
+		if (readFileError) {
+			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in going to first file in zip in '%@'", _fileName], NSLocalizedDescriptionKey, nil];
+			*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:11 userInfo:errorDictionary];
+		}
 		return NO;
 	}
 
@@ -169,8 +178,10 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 - (BOOL)goToNextFileInZip:(NSError **)readFileError
 {
 	if (_mode != ZipFileModeUnzip) {
-		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Operation not permitted without Unzip mode"], NSLocalizedDescriptionKey, nil];
-		*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:10 userInfo:errorDictionary];
+		if (readFileError) {
+			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Operation not permitted without Unzip mode"], NSLocalizedDescriptionKey, nil];
+			*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:10 userInfo:errorDictionary];
+		}
 		return NO;
 	}
 	
@@ -179,8 +190,10 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 		return NO;
 
 	if (err != UNZ_OK) {
-		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in going to next file in zip in '%@'", _fileName], NSLocalizedDescriptionKey, nil];
-		*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:12 userInfo:errorDictionary];
+		if (readFileError) {
+			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in going to next file in zip in '%@'", _fileName], NSLocalizedDescriptionKey, nil];
+			*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:12 userInfo:errorDictionary];
+		}
 		return NO;
 	}
 	
@@ -190,8 +203,10 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 - (BOOL)locateFileInZip:(NSString *)fileNameInZip error:(NSError **)readFileError
 {
 	if (_mode != ZipFileModeUnzip) {
-		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Operation not permitted without Unzip mode"], NSLocalizedDescriptionKey, nil];
-		*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:10 userInfo:errorDictionary];
+		if (readFileError) {
+			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Operation not permitted without Unzip mode"], NSLocalizedDescriptionKey, nil];
+			*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:10 userInfo:errorDictionary];
+		}
 		return NO;
 	}
 	
@@ -200,8 +215,10 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 		return NO;
 
 	if (err != UNZ_OK) {
-		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in going to next file in zip in '%@'", _fileName], NSLocalizedDescriptionKey, nil];
-		*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:12 userInfo:errorDictionary];
+		if (readFileError) {
+			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in going to next file in zip in '%@'", _fileName], NSLocalizedDescriptionKey, nil];
+			*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:12 userInfo:errorDictionary];
+		}
 		return NO;
 	}
 	
@@ -211,8 +228,10 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 - (ZipFileInfo *)getCurrentFileInZipInfo:(NSError **)readFileError
 {
 	if (_mode != ZipFileModeUnzip) {
-		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Operation not permitted without Unzip mode"], NSLocalizedDescriptionKey, nil];
-		*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:10 userInfo:errorDictionary];
+		if (readFileError) {
+			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Operation not permitted without Unzip mode"], NSLocalizedDescriptionKey, nil];
+			*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:10 userInfo:errorDictionary];
+		}
 		return nil;
 	}
 
@@ -221,8 +240,10 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 	
 	int err = unzGetCurrentFileInfo(_unzFile, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
 	if (err != UNZ_OK) {
-		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in getting current file info in '%@'", _fileName], NSLocalizedDescriptionKey, nil];
-		*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:13 userInfo:errorDictionary];
+		if (readFileError) {
+			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in getting current file info in '%@'", _fileName], NSLocalizedDescriptionKey, nil];
+			*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:13 userInfo:errorDictionary];
+		}
 		return nil;
 	}
 	
@@ -269,8 +290,10 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 - (ZipReadStream *)readCurrentFileInZipWithPassword:(NSString *)password error:(NSError **)readFileError
 {
 	if (_mode != ZipFileModeUnzip) {
-		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Operation not permitted without Unzip mode"], NSLocalizedDescriptionKey, nil];
-		*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:10 userInfo:errorDictionary];
+		if (readFileError) {
+			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Operation not permitted without Unzip mode"], NSLocalizedDescriptionKey, nil];
+			*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:10 userInfo:errorDictionary];
+		}
 		return nil;
 	}
 	
@@ -279,8 +302,10 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 	
 	int err = unzGetCurrentFileInfo(_unzFile, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
 	if (err != UNZ_OK) {
-		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in getting current file info in '%@'", _fileName], NSLocalizedDescriptionKey, nil];
-		*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:13 userInfo:errorDictionary];
+		if (readFileError) {
+			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in getting current file info in '%@'", _fileName], NSLocalizedDescriptionKey, nil];
+			*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:13 userInfo:errorDictionary];
+		}
 		return nil;
 	}
 	
@@ -288,8 +313,10 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 	
 	err = unzOpenCurrentFilePassword(_unzFile, [password cStringUsingEncoding:NSUTF8StringEncoding]);
 	if (err != UNZ_OK) {
-		NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in opening current file in '%@'", _fileName], NSLocalizedDescriptionKey, nil];
-		*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:14 userInfo:errorDictionary];
+		if (readFileError) {
+			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in opening current file in '%@'", _fileName], NSLocalizedDescriptionKey, nil];
+			*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:14 userInfo:errorDictionary];
+		}
 		return nil;
 	}
 	

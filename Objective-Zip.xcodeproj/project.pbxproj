@@ -104,6 +104,7 @@
 		8CBE431610E95FA300AC9ED3 /* ZipReadStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZipReadStream.h; path = "Objective-Zip/ZipReadStream.h"; sourceTree = "<group>"; };
 		8CBE431710E95FA300AC9ED3 /* ZipReadStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZipReadStream.m; path = "Objective-Zip/ZipReadStream.m"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Objective_Zip_Test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Objective_Zip_Test-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		96C8290414CF3A4900E04CBB /* Readme.markdown */ = {isa = PBXFileReference; lastKnownFileType = text; path = Readme.markdown; sourceTree = "<group>"; };
 		96D49C2414CEE20E00C927AA /* libObjective-Zip.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libObjective-Zip.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		96D49C2514CEE20E00C927AA /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		96D49C2814CEE20E00C927AA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -186,6 +187,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				96C8290414CF3A4900E04CBB /* Readme.markdown */,
 				8C6D353B10E56BA400B63EFA /* Objective-Zip */,
 				8C6D350110E56A4B00B63EFA /* MiniZip */,
 				96D49C1A14CEE05D00C927AA /* TestApp */,
@@ -744,6 +746,7 @@
 				96D49C3314CEE20E00C927AA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		96D49C8D14CF160000C927AA /* Build configuration list for PBXNativeTarget "Objective-Zip Intel" */ = {
 			isa = XCConfigurationList;
@@ -752,6 +755,7 @@
 				96D49C8F14CF160000C927AA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		96D49CA214CF16B100C927AA /* Build configuration list for PBXNativeTarget "Objective-Zip" */ = {
 			isa = XCConfigurationList;
@@ -760,6 +764,7 @@
 				96D49CA414CF16B100C927AA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Objective-Zip" */ = {
 			isa = XCConfigurationList;

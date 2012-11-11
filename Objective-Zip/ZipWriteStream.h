@@ -36,11 +36,10 @@
 struct   zipFile__;
 
 @interface ZipWriteStream : NSObject {
-	NSString *_fileNameInZip;
-
 @private
 	struct zipFile__ * _zipFile;
 }
+@property (nonatomic, copy) NSString *fileNameInZip;
 
 - (id) initWithZipFileStruct:(struct zipFile__ *)zipFile fileNameInZip:(NSString *)fileNameInZip;
 

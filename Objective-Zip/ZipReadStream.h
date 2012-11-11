@@ -36,11 +36,11 @@
 struct unzFile__;
 
 @interface ZipReadStream : NSObject {
-	NSString *_fileNameInZip;
-	
 @private
 	struct unzFile__ * _unzFile;
 }
+
+@property (nonatomic, copy) NSString *fileNameInZip;
 
 - (id) initWithUnzFileStruct:(struct unzFile__ *)unzFile fileNameInZip:(NSString *)fileNameInZip;
 

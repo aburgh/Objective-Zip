@@ -45,6 +45,9 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 
 @implementation ZipFile
 
+@synthesize fileName = _fileName;
+@synthesize mode = _mode;
+
 - (id)initWithFileName:(NSString *)fileName mode:(ZipFileMode)mode
 {
 	if (self = [super init]) {

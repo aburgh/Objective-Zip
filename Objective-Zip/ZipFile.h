@@ -55,13 +55,15 @@ typedef enum {
 @class ZipFileInfo;
 
 @interface ZipFile : NSObject {
-	NSString *_fileName;
-	ZipFileMode _mode;
-
 @private
 	struct zipFile__ * _zipFile;
 	struct unzFile__ * _unzFile;
 }
+
+@property (nonatomic, readonly) NSString *fileName;
+@property (nonatomic, readonly) ZipFileMode mode;
+@property (nonatomic, readonly) NSUInteger filesCount;
+@property (nonatomic, readonly) NSArray *containedFiles;
 
 - (id)initWithFileName:(NSString *)fileName mode:(ZipFileMode)mode;
 

@@ -39,6 +39,8 @@ static NSString *ZipWriteErrorDomain = @"ZipWriteErrorDomain";
 
 @implementation ZipWriteStream
 
+@synthesize fileNameInZip = _fileNameInZip;
+
 - (id) initWithZipFileStruct:(struct zipFile__ *)zipFile fileNameInZip:(NSString *)fileNameInZip {
 	if (self = [super init]) {
 		_zipFile = zipFile;

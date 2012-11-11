@@ -95,6 +95,7 @@
 		}
 	}
 	[zipFile close];
+	[zipFile release];
 
 	self.filenames = filenames;
 	self.hashes = hashes;
@@ -135,6 +136,8 @@
 
 		STAssertEqualObjects([self.filenames objectAtIndex:i], [fileInfo name], @"at index %d.\n", i);
 	}
+	[zipFile close];
+	[zipFile release];
 }
 
 - (void)testVerifyHashes
@@ -148,29 +151,33 @@
 	// Total file count includes the directories inserted between files
 	for (int i = 0; i < (FILE_COUNT * 2 - 1) ; i++) {
 
-		NSString *inputHash = [self.hashes objectAtIndex:i];
+		@autoreleasepool {
+			NSString *inputHash = [self.hashes objectAtIndex:i];
 
-		if ([inputHash isEqual:[NSNull null]]) {
-			STAssertTrue([zipFile goToNextFileInZip:&error] || error.code == UNZ_END_OF_LIST_OF_FILE, @"Error (%lld): %@", error.code, error.localizedDescription);
+			if ([inputHash isEqual:[NSNull null]]) {
+				STAssertTrue([zipFile goToNextFileInZip:&error] || error.code == UNZ_END_OF_LIST_OF_FILE, @"Error (%lld): %@", error.code, error.localizedDescription);
 
-			if (error.code == UNZ_END_OF_LIST_OF_FILE)
-				break;
-			else
-				continue;
+				if (error.code == UNZ_END_OF_LIST_OF_FILE)
+					break;
+				else
+					continue;
+			}
+
+			readStream = [zipFile readCurrentFileInZip:&error];
+			STAssertNotNil(readStream, @"%@", error.localizedDescription);
+
+			data = [readStream readDataOfLength:(FILE_SIZE_BASE * 8) error:&error];
+			STAssertNotNil(data, @"%@", error.localizedDescription);
+
+			STAssertTrue([readStream finishedReadingWithError:&error], @"Error (%ld): %@", error.code, error.localizedDescription);
+
+			STAssertEqualObjects(inputHash, [self md5ForData:data], @"at index %d.", i);
+
+			STAssertTrue([zipFile goToNextFileInZip:&error] || error.code == UNZ_END_OF_LIST_OF_FILE, @"Error (%lld):%@", error.code, error.localizedDescription);
 		}
-
-		readStream = [zipFile readCurrentFileInZip:&error];
-		STAssertNotNil(readStream, @"%@", error.localizedDescription);
-
-		data = [readStream readDataOfLength:(FILE_SIZE_BASE * 8) error:&error];
-		STAssertNotNil(data, @"%@", error.localizedDescription);
-
-		STAssertTrue([readStream finishedReadingWithError:&error], @"Error (%ld): %@", error.code, error.localizedDescription);
-
-		STAssertEqualObjects(inputHash, [self md5ForData:data], @"at index %d.", i);
-
-		STAssertTrue([zipFile goToNextFileInZip:&error] || error.code == UNZ_END_OF_LIST_OF_FILE, @"Error (%lld):%@", error.code, error.localizedDescription);
 	}
+	[zipFile close];
+	[zipFile release];
 }
 
 @end

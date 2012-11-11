@@ -340,29 +340,19 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 
 - (void)close
 {
-	switch (_mode) {
-		case ZipFileModeUnzip: {
-			unzClose(_unzFile);
-			break;
-		}
-			
-		case ZipFileModeCreate: {
-			zipClose(_zipFile, NULL);
-			break;
-		}
-			
-		case ZipFileModeAppend: {
-			zipClose(_zipFile, NULL);
-			break;
-		}
-
-		default:
-			break;
+	if (_unzFile) {
+		unzClose(_unzFile);
+		_unzFile = NULL;
+	}
+	if (_zipFile) {
+		zipClose(_zipFile, NULL);
+		_zipFile = NULL;
 	}
 }
 
 - (void)dealloc
 {
+	[self close]; // No harm in calling twice
 	[_fileName release];
 	[super dealloc];
 }

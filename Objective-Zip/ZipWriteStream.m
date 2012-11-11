@@ -41,7 +41,13 @@ static NSString *ZipWriteErrorDomain = @"ZipWriteErrorDomain";
 
 @synthesize fileNameInZip = _fileNameInZip;
 
-- (id) initWithZipFileStruct:(struct zipFile__ *)zipFile fileNameInZip:(NSString *)fileNameInZip {
++ (id)writeStreamWithZipFileStruct:(struct zipFile__ *)zipFile fileNameInZip:(NSString *)fileNameInZip
+{
+	return [[[self alloc] initWithZipFileStruct:zipFile fileNameInZip:fileNameInZip] autorelease];
+}
+
+- (id) initWithZipFileStruct:(struct zipFile__ *)zipFile fileNameInZip:(NSString *)fileNameInZip
+{
 	if (self = [super init]) {
 		_zipFile = zipFile;
 		_fileNameInZip = [fileNameInZip copy];

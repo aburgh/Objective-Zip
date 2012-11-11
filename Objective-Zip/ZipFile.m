@@ -48,6 +48,11 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 @synthesize fileName = _fileName;
 @synthesize mode = _mode;
 
++ (id)zipFileWithFileName:(NSString *)fileName mode:(ZipFileMode)mode
+{
+	return [[[self alloc] initWithFileName:fileName mode:mode] autorelease];
+}
+
 - (id)initWithFileName:(NSString *)fileName mode:(ZipFileMode)mode
 {
 	if (self = [super init]) {
@@ -122,7 +127,7 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 		return nil;
 	}
 	
-	return [[[ZipWriteStream alloc] initWithZipFileStruct:_zipFile fileNameInZip:fileNameInZip] autorelease];
+	return [ZipWriteStream writeStreamWithZipFileStruct:_zipFile fileNameInZip:fileNameInZip];
 }
 
 - (NSUInteger)filesCount
@@ -303,8 +308,7 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 	NSCalendar *calendar = [NSCalendar currentCalendar];
 	NSDate *date = [calendar dateFromComponents:components];
 	
-	ZipFileInfo *info = [[ZipFileInfo alloc] initWithName:name length:file_info.uncompressed_size level:level crypted:crypted size:file_info.compressed_size date:date crc32:file_info.crc];
-	return [info autorelease];
+	return [ZipFileInfo fileInfoWithName:name length:file_info.uncompressed_size level:level crypted:crypted size:file_info.compressed_size date:date crc32:file_info.crc];
 }
 
 - (ZipReadStream *)readCurrentFileInZip:(NSError **)readFileError
@@ -348,7 +352,7 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 		return nil;
 	}
 	
-	return [[[ZipReadStream alloc] initWithUnzFileStruct:_unzFile fileNameInZip:fileNameInZip] autorelease];
+	return [ZipReadStream readStreamWithUnzFileStruct:_unzFile fileNameInZip:fileNameInZip];
 }
 
 - (void)close

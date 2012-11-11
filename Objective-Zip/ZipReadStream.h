@@ -42,6 +42,8 @@ struct unzFile__;
 
 @property (nonatomic, readonly) NSString *fileNameInZip;
 
++ (id)readStreamWithUnzFileStruct:(struct unzFile__ *)unzFile fileNameInZip:(NSString *)fileNameInZip;
+
 - (id) initWithUnzFileStruct:(struct unzFile__ *)unzFile fileNameInZip:(NSString *)fileNameInZip;
 
 - (NSData *)readDataOfLength:(NSUInteger)length error:(NSError **)readError;

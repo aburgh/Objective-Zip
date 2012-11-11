@@ -65,6 +65,8 @@ typedef enum {
 @property (nonatomic, readonly) NSUInteger filesCount;
 @property (nonatomic, readonly) NSArray *containedFiles;
 
++ (id)zipFileWithFileName:(NSString *)fileName mode:(ZipFileMode)mode;
+
 - (id)initWithFileName:(NSString *)fileName mode:(ZipFileMode)mode;
 
 - (ZipWriteStream *)writeFileInZipWithName:(NSString *)fileNameInZip compressionLevel:(ZipCompressionLevel)compressionLevel error:(NSError **)writeFileError;

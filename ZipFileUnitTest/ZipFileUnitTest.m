@@ -59,7 +59,7 @@
 	NSMutableString *dirPath  = [NSMutableString string];
 	NSMutableArray *filenames = [NSMutableArray array];
 	NSMutableArray *hashes    = [NSMutableArray array];
-	ZipFile *zipFile = [[ZipFile alloc] initWithFileName:self.zipFilePath mode:ZipFileModeCreate];
+	ZipFile *zipFile = [ZipFile zipFileWithFileName:self.zipFilePath mode:ZipFileModeCreate];
 
 	for (int i = 0; i < FILE_COUNT; i++) {
 
@@ -95,7 +95,6 @@
 		}
 	}
 	[zipFile close];
-	[zipFile release];
 
 	self.filenames = filenames;
 	self.hashes = hashes;
@@ -113,13 +112,12 @@
 
 - (void)testVerifyCount
 {
-	ZipFile *zipFile = [[ZipFile alloc] initWithFileName:self.zipFilePath mode:ZipFileModeUnzip];
+	ZipFile *zipFile = [ZipFile zipFileWithFileName:self.zipFilePath mode:ZipFileModeUnzip];
 
 	// Total file count includes the directories inserted between files
 	STAssertTrue(zipFile.filesCount == (FILE_COUNT * 2 - 1), nil);
 
 	[zipFile close];
-	[zipFile release];
 }
 
 - (void)testVerifyFileNames

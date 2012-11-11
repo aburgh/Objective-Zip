@@ -41,6 +41,11 @@ static NSString *ZipReadErrorDomain = @"ZipReadErrorDomain";
 
 @synthesize fileNameInZip = _fileNameInZip;
 
++ (id)readStreamWithUnzFileStruct:(struct unzFile__ *)unzFile fileNameInZip:(NSString *)fileNameInZip
+{
+	return [[[self alloc] initWithUnzFileStruct:unzFile fileNameInZip:fileNameInZip] autorelease];
+}
+
 - (id) initWithUnzFileStruct:(struct unzFile__ *)unzFile fileNameInZip:(NSString *)fileNameInZip {
 	if (self = [super init]) {
 		_unzFile = unzFile;

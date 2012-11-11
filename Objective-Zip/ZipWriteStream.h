@@ -41,6 +41,8 @@ struct   zipFile__;
 }
 @property (nonatomic, readonly) NSString *fileNameInZip;
 
++ (id)writeStreamWithZipFileStruct:(struct zipFile__ *)zipFile fileNameInZip:(NSString *)fileNameInZip;
+
 - (id) initWithZipFileStruct:(struct zipFile__ *)zipFile fileNameInZip:(NSString *)fileNameInZip;
 
 - (BOOL)writeData:(NSData *)data error:(NSError **)writeError;

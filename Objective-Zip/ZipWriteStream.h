@@ -39,7 +39,7 @@ struct   zipFile__;
 @private
 	struct zipFile__ * _zipFile;
 }
-@property (nonatomic, copy) NSString *fileNameInZip;
+@property (nonatomic, readonly) NSString *fileNameInZip;
 
 - (id) initWithZipFileStruct:(struct zipFile__ *)zipFile fileNameInZip:(NSString *)fileNameInZip;
 

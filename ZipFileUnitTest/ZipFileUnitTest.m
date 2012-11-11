@@ -116,7 +116,7 @@
 	ZipFile *zipFile = [[ZipFile alloc] initWithFileName:self.zipFilePath mode:ZipFileModeUnzip];
 
 	// Total file count includes the directories inserted between files
-	STAssertTrue([zipFile filesCount] == (FILE_COUNT * 2 - 1), nil);
+	STAssertTrue(zipFile.filesCount == (FILE_COUNT * 2 - 1), nil);
 
 	[zipFile close];
 	[zipFile release];
@@ -126,7 +126,7 @@
 {
 	ZipFile *zipFile = [[ZipFile alloc] initWithFileName:self.zipFilePath mode:ZipFileModeUnzip];
 
-	NSArray *fileInfos = [zipFile containedFiles];
+	NSArray *fileInfos = zipFile.containedFiles;
 
 	STAssertTrue(fileInfos.count == self.filenames.count, nil);
 
@@ -134,7 +134,7 @@
 
 		ZipFileInfo *fileInfo = [fileInfos objectAtIndex:i];
 
-		STAssertEqualObjects([self.filenames objectAtIndex:i], [fileInfo name], @"at index %d.\n", i);
+		STAssertEqualObjects([self.filenames objectAtIndex:i], fileInfo.name, @"at index %d.\n", i);
 	}
 	[zipFile close];
 	[zipFile release];

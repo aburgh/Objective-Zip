@@ -44,7 +44,7 @@ static NSString *ZipReadErrorDomain = @"ZipReadErrorDomain";
 - (id) initWithUnzFileStruct:(struct unzFile__ *)unzFile fileNameInZip:(NSString *)fileNameInZip {
 	if (self = [super init]) {
 		_unzFile = unzFile;
-		_fileNameInZip = fileNameInZip;
+		_fileNameInZip = [fileNameInZip copy];
 	}
 	
 	return self;
@@ -54,10 +54,11 @@ static NSString *ZipReadErrorDomain = @"ZipReadErrorDomain";
 {
 	NSMutableData *data = [NSMutableData dataWithLength:length];
 	
-	int result = unzReadCurrentFile(_unzFile, [data mutableBytes], (unsigned int)[data length]);
+	int result = unzReadCurrentFile(_unzFile, data.mutableBytes, (unsigned int)data.length);
 	if (result < 0) {
 		if (readError) {
-			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in reading '%@' in the zipfile", _fileNameInZip], NSLocalizedDescriptionKey, nil];
+			NSDictionary *errorDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+											 [NSString stringWithFormat:@"Error in reading '%@' in the zipfile", _fileNameInZip], NSLocalizedDescriptionKey, nil];
 			*readError = [NSError errorWithDomain:ZipReadErrorDomain code:result userInfo:errorDictionary];
 		}
 		return nil;
@@ -71,7 +72,8 @@ static NSString *ZipReadErrorDomain = @"ZipReadErrorDomain";
 	int err = unzCloseCurrentFile(_unzFile);
 	if (err != UNZ_OK) {
 		if (readError) {
-			NSDictionary *errorDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Error in closing '%@' in the zipfile", _fileNameInZip], NSLocalizedDescriptionKey, nil];
+			NSDictionary *errorDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+											 [NSString stringWithFormat:@"Error in closing '%@' in the zipfile", _fileNameInZip], NSLocalizedDescriptionKey, nil];
 			*readError = [NSError errorWithDomain:ZipReadErrorDomain code:err userInfo:errorDictionary];
 		}
 		return NO;
@@ -79,5 +81,10 @@ static NSString *ZipReadErrorDomain = @"ZipReadErrorDomain";
 	return YES;
 }
 
+- (void)dealloc
+{
+	[_fileNameInZip release];
+	[super dealloc];
+}
 
 @end

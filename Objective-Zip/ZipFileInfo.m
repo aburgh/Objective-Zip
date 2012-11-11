@@ -38,12 +38,12 @@
 
 - (id) initWithName:(NSString *)name length:(NSUInteger)length level:(ZipCompressionLevel)level crypted:(BOOL)crypted size:(NSUInteger)size date:(NSDate *)date crc32:(NSUInteger)crc32 {
 	if (self = [super init]) {
-		_name = [name retain];
+		_name = [name copy];
 		_length = length;
 		_level = level;
 		_crypted = crypted;
 		_size = size;
-		_date = [date retain];
+		_date = [date copy];
 		_crc32 = crc32;
 	}
 	

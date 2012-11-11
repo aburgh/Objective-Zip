@@ -40,7 +40,7 @@ struct unzFile__;
 	struct unzFile__ * _unzFile;
 }
 
-@property (nonatomic, copy) NSString *fileNameInZip;
+@property (nonatomic, readonly) NSString *fileNameInZip;
 
 - (id) initWithUnzFileStruct:(struct unzFile__ *)unzFile fileNameInZip:(NSString *)fileNameInZip;
 

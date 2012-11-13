@@ -35,9 +35,11 @@
 #import "ZipFile.h"
 #include "zip.h"
 #include "unzip.h"
+#include "curl_io.h"
 #import "ZipReadStream.h"
 #import "ZipWriteStream.h"
 #import "ZipFileInfo.h"
+#import <curl/curl.h>
 
 #define FILE_IN_ZIP_MAX_NAME_LENGTH (256)
 
@@ -48,12 +50,22 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 @synthesize fileName = _fileName;
 @synthesize mode = _mode;
 
-+ (id)zipFileWithFileName:(NSString *)fileName mode:(ZipFileMode)mode
++ (id)zipFileWithFileName:(NSString *)fileName mode:(ZipFileMode)mode error:(NSError **)outError
 {
-	return [[[self alloc] initWithFileName:fileName mode:mode] autorelease];
+	return [[[self alloc] initWithFileName:fileName mode:mode error:outError] autorelease];
+}
+
++ (id)zipFileWithURL:(NSURL *)url mode:(ZipFileMode)mode error:(NSError **)outError
+{
+	return [[[self alloc] initWithURL:url mode:mode error:outError] autorelease];
 }
 
 - (id)initWithFileName:(NSString *)fileName mode:(ZipFileMode)mode
+{
+	return [self initWithFileName:fileName mode:mode error:NULL];
+}
+
+- (id)initWithFileName:(NSString *)fileName mode:(ZipFileMode)mode error:(NSError **)outError
 {
 	if (self = [super init]) {
 		_fileName = [fileName copy];
@@ -78,8 +90,54 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 			default:
 				break;
 		}
+		if (!_unzFile && !_zipFile) {
+			if (outError) {
+				NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+										  [NSString stringWithFormat:@"Error opening '%@'", fileName], NSLocalizedDescriptionKey, nil];
+				*outError = [NSError errorWithDomain:NSPOSIXErrorDomain code:errno userInfo:userInfo];
+			}
+			[self release];
+			self = nil;
+		}
 	}
 	
+	return self;
+}
+
+- (id)initWithURL:(NSURL *)url mode:(ZipFileMode)mode error:(NSError **)outError
+{
+	if ([url isFileURL])
+		return [self initWithFileName:url.path mode:mode error:outError];
+	else {
+		if (mode != ZipFileModeUnzip) {
+			if (outError) {
+				NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+										  @"Writing to archives via URLs is not supported", NSLocalizedDescriptionKey, nil];
+				*outError = [NSError errorWithDomain:ZipFileErrorDomain code:10 userInfo:userInfo];
+			}
+			[self release];
+			self = nil;
+			return nil;
+		}
+
+		self = [super init];
+		if (self) {
+			_fileName = [url.absoluteString copy];
+			_mode = mode;
+			_unzFile = zlib_curl_unzOpen(_fileName.UTF8String);
+
+			if (!_unzFile) {
+				if (outError) {
+					NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+											  [NSString stringWithFormat:@"Error opening '%@'", _fileName], NSLocalizedDescriptionKey,
+											  [NSString stringWithFormat:@"%s", curl_easy_strerror(errno)], NSLocalizedRecoverySuggestionErrorKey, nil];
+					*outError = [NSError errorWithDomain:@"CURLErrorDomain" code:errno userInfo:userInfo];
+				}
+				[self release];
+				self = nil;
+			}
+		}
+	}
 	return self;
 }
 
@@ -199,15 +257,15 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 	}
 	
 	int err = unzGoToNextFile(_unzFile);
+
 	if (err == UNZ_END_OF_LIST_OF_FILE) {
 		if (readFileError) {
 			NSString *message = [NSString stringWithFormat:@"No more files in '%@'", _fileName];
 			NSDictionary *errorDictionary = [NSDictionary dictionaryWithObjectsAndKeys:message, NSLocalizedDescriptionKey, nil];
 			*readFileError = [NSError errorWithDomain:ZipFileErrorDomain code:UNZ_END_OF_LIST_OF_FILE userInfo:errorDictionary];
 		}
-	return NO;
+		return NO;
 	}
-	
 	if (err != UNZ_OK) {
 		if (readFileError) {
 			NSDictionary *errorDictionary = [NSDictionary dictionaryWithObjectsAndKeys:

@@ -59,7 +59,7 @@
 	NSMutableString *dirPath  = [NSMutableString string];
 	NSMutableArray *filenames = [NSMutableArray array];
 	NSMutableArray *hashes    = [NSMutableArray array];
-	ZipFile *zipFile = [ZipFile zipFileWithFileName:self.zipFilePath mode:ZipFileModeCreate];
+	ZipFile *zipFile = [ZipFile zipFileWithFileName:self.zipFilePath mode:ZipFileModeCreate error:&error];
 
 	for (int i = 0; i < FILE_COUNT; i++) {
 
@@ -98,6 +98,15 @@
 
 	self.filenames = filenames;
 	self.hashes = hashes;
+
+	[[NSFileManager defaultManager] copyItemAtPath:self.zipFilePath toPath:@"/tmp/test.zip" error:nil];
+	[filenames writeToFile:@"/tmp/test-filenames.txt" atomically:NO];
+	NSMutableArray *savedHashes = [self.hashes mutableCopy];
+	for (int z = 0; z < savedHashes.count; z++) {
+		if ([savedHashes objectAtIndex:z] == [NSNull null])
+			[savedHashes replaceObjectAtIndex:z withObject:@"[NSNull null]"];
+	}
+	[savedHashes writeToFile:@"/tmp/test-hashes.txt" atomically:NO];
 }
 
 - (void)tearDown
@@ -112,7 +121,9 @@
 
 - (void)testVerifyCount
 {
-	ZipFile *zipFile = [ZipFile zipFileWithFileName:self.zipFilePath mode:ZipFileModeUnzip];
+	NSError *error;
+
+	ZipFile *zipFile = [ZipFile zipFileWithFileName:self.zipFilePath mode:ZipFileModeUnzip error:&error];
 
 	// Total file count includes the directories inserted between files
 	STAssertTrue(zipFile.filesCount == (FILE_COUNT * 2 - 1), nil);

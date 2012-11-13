@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'objective-zip_test' target in the 'objective-zip_test' project
+//
+
+#ifdef __OBJC__
+	#import <Foundation/Foundation.h>
+#endif

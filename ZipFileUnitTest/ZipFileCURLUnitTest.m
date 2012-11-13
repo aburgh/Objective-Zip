@@ -74,10 +74,11 @@
     [super tearDown];
 }
 
-- (void)testVerifySetup
-{
-	STAssertEquals(self.filenames.count, self.hashes.count, nil);
-}
+// setUp/tearDown happens for each test, so disabling until performance improves
+//- (void)testVerifySetup
+//{
+//	STAssertEquals(self.filenames.count, self.hashes.count, nil);
+//}
 
 - (void)testVerifyArchive
 {

@@ -203,22 +203,22 @@ local int unzlocal_getShort (pzlib_filefunc_def,filestream,pX)
     voidpf filestream;
     uLong *pX;
 {
-    uLong x ;
-    int i;
-    int err;
-
-    err = unzlocal_getByte(pzlib_filefunc_def,filestream,&i);
-    x = (uLong)i;
-
-    if (err==UNZ_OK)
-        err = unzlocal_getByte(pzlib_filefunc_def,filestream,&i);
-    x += ((uLong)i)<<8;
-
-    if (err==UNZ_OK)
-        *pX = x;
-    else
-        *pX = 0;
-    return err;
+	unsigned char y[2];
+	ushort x;
+	
+	int result = (int)ZREAD(*pzlib_filefunc_def, filestream, y, sizeof(y));
+	if (result == sizeof(y)) {
+		x  =  (uLong) y[0];
+		x += ((uLong) y[1] << 8);
+		*pX = x;
+	}
+	else {
+		if (ZERROR(*pzlib_filefunc_def, filestream))
+			return UNZ_ERRNO;
+		else
+			return UNZ_EOF;
+	}
+	return UNZ_OK;
 }
 
 local int unzlocal_getLong OF((
@@ -231,32 +231,25 @@ local int unzlocal_getLong (pzlib_filefunc_def,filestream,pX)
     voidpf filestream;
     uLong *pX;
 {
-    uLong x ;
-    int i;
-    int err;
-
-    err = unzlocal_getByte(pzlib_filefunc_def,filestream,&i);
-    x = (uLong)i;
-
-    if (err==UNZ_OK)
-        err = unzlocal_getByte(pzlib_filefunc_def,filestream,&i);
-    x += ((uLong)i)<<8;
-
-    if (err==UNZ_OK)
-        err = unzlocal_getByte(pzlib_filefunc_def,filestream,&i);
-    x += ((uLong)i)<<16;
-
-    if (err==UNZ_OK)
-        err = unzlocal_getByte(pzlib_filefunc_def,filestream,&i);
-    x += ((uLong)i)<<24;
-
-    if (err==UNZ_OK)
-        *pX = x;
-    else
-        *pX = 0;
-    return err;
+	unsigned char y[4];
+	uLong x;
+	
+	int result = (int)ZREAD(*pzlib_filefunc_def, filestream, y, sizeof(y));
+	if (result == sizeof(y)) {
+		x  =  (uLong) y[0];
+		x += ((uLong) y[1] << 8);
+		x += ((uLong) y[2] << 16);
+		x += ((uLong) y[3] << 24);
+		*pX = x;
+	}
+	else {
+		if (ZERROR(*pzlib_filefunc_def, filestream))
+			return UNZ_ERRNO;
+		else
+			return UNZ_EOF;
+	}
+	return UNZ_OK;
 }
-
 
 /* My own strcmpi / strcasecmp */
 local int strcmpcasenosensitive_internal (fileName1,fileName2)

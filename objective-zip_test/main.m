@@ -71,6 +71,8 @@ int main(int argc, const char * argv[])
 
 		NSError *error;
 
+		printf("Start: %s\n", [[[NSDate date] description] UTF8String]);
+
 //		NSString *url = @"htt ps://github.com/downloads/aburgh/Objective-Zip/CURL_Unit_Test_data.zip";
 		NSString *url = @"http://cloud.github.com/downloads/aburgh/Objective-Zip/CURL_Unit_Test_data.zip";
 
@@ -90,7 +92,7 @@ int main(int argc, const char * argv[])
 				if (!info)
 					errx(EXIT_FAILURE, "getCurrentFileInfoInZip: %s", error.localizedDescription.UTF8String);
 
-				printf("%s\n", info.name.UTF8String);
+				printf("%s: %s\n", [[[NSDate date] description] UTF8String], info.name.UTF8String);
 				
 				NSString *filename = [filenames objectAtIndex:i];
 				if ([info.name isEqual:filename] == NO)
@@ -122,6 +124,7 @@ int main(int argc, const char * argv[])
 				atEnd = ![zipFile goToNextFileInZip:&error];
 			}
 		}
+		printf("  End: %s\n", [[[NSDate date] description] UTF8String]);
 	}
 	return 0;
 }

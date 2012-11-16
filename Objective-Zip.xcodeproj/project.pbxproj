@@ -61,7 +61,6 @@
 		96D49CAC14CF1DF400C927AA /* Objective_Zip.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D49CA014CF16B100C927AA /* Objective_Zip.m */; };
 		96D49CB214CF1F9E00C927AA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D49CB114CF1F9E00C927AA /* libz.dylib */; };
 		96F9F406164E96E500AEB953 /* Objective-Zip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D49C9614CF16B100C927AA /* Objective-Zip.framework */; };
-		96F9F40B16503C2400AEB953 /* curl_io.c in Sources */ = {isa = PBXBuildFile; fileRef = 96F9F40A16503C2400AEB953 /* curl_io.c */; };
 		96F9F40C16503C2400AEB953 /* curl_io.c in Sources */ = {isa = PBXBuildFile; fileRef = 96F9F40A16503C2400AEB953 /* curl_io.c */; };
 		96F9F416165098B300AEB953 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 96F9F415165098B300AEB953 /* libcurl.dylib */; };
 /* End PBXBuildFile section */
@@ -688,7 +687,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				96D49C3414CEE31700C927AA /* ioapi.c in Sources */,
-				96F9F40B16503C2400AEB953 /* curl_io.c in Sources */,
 				96D49C3514CEE32600C927AA /* mztools.c in Sources */,
 				96D49C3614CEE32A00C927AA /* unzip.c in Sources */,
 				96D49C3714CEE33A00C927AA /* zip.c in Sources */,
@@ -969,6 +967,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_CURL,
 					"DEBUG=1",
 					"$(inherited)",
 				);
@@ -991,6 +990,9 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_CURL,
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
@@ -1014,6 +1016,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Objective-Zip Framework/Objective-Zip-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_CURL,
 					"DEBUG=1",
 					"$(inherited)",
 				);
@@ -1044,6 +1047,9 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Objective-Zip Framework/Objective-Zip-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_CURL,
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				INFOPLIST_FILE = "Objective-Zip Framework/Objective-Zip-Info.plist";
@@ -1103,6 +1109,7 @@
 				96A68C091651488200C0E535 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		96D49C3114CEE20E00C927AA /* Build configuration list for PBXNativeTarget "Objective-Zip ARM" */ = {
 			isa = XCConfigurationList;

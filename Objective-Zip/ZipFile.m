@@ -39,7 +39,9 @@
 #import "ZipReadStream.h"
 #import "ZipWriteStream.h"
 #import "ZipFileInfo.h"
+#if defined(USE_CURL)
 #import <curl/curl.h>
+#endif
 
 #define FILE_IN_ZIP_MAX_NAME_LENGTH (256)
 
@@ -109,6 +111,7 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 	if ([url isFileURL])
 		return [self initWithFileName:url.path mode:mode error:outError];
 	else {
+#if defined(USE_CURL)
 		if (mode != ZipFileModeUnzip) {
 			if (outError) {
 				NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -137,6 +140,16 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 				self = nil;
 			}
 		}
+#else // USE_CURL
+		if (outError) {
+			NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+									  @"Only file URLs supported", NSLocalizedDescriptionKey, nil];
+			*outError = [NSError errorWithDomain:ZipFileErrorDomain code:15 userInfo:userInfo];
+		}
+		[self release];
+		self = nil;
+		return nil;
+#endif // USE_CURL
 	}
 	return self;
 }

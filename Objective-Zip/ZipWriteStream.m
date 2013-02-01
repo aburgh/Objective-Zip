@@ -43,7 +43,7 @@ static NSString *ZipWriteErrorDomain = @"ZipWriteErrorDomain";
 
 + (id)writeStreamWithZipFileStruct:(struct zipFile__ *)zipFile fileNameInZip:(NSString *)fileNameInZip
 {
-	return [[[self alloc] initWithZipFileStruct:zipFile fileNameInZip:fileNameInZip] autorelease];
+	return [[self alloc] initWithZipFileStruct:zipFile fileNameInZip:fileNameInZip];
 }
 
 - (id) initWithZipFileStruct:(struct zipFile__ *)zipFile fileNameInZip:(NSString *)fileNameInZip
@@ -82,12 +82,6 @@ static NSString *ZipWriteErrorDomain = @"ZipWriteErrorDomain";
 		return NO;
 	}
 	return YES;
-}
-
-- (void)dealloc
-{
-	[_fileNameInZip release];
-	[super dealloc];
 }
 
 @end

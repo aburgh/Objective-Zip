@@ -54,12 +54,12 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 
 + (id)zipFileWithFileName:(NSString *)fileName mode:(ZipFileMode)mode error:(NSError **)outError
 {
-	return [[[self alloc] initWithFileName:fileName mode:mode error:outError] autorelease];
+	return [[self alloc] initWithFileName:fileName mode:mode error:outError];
 }
 
 + (id)zipFileWithURL:(NSURL *)url mode:(ZipFileMode)mode error:(NSError **)outError
 {
-	return [[[self alloc] initWithURL:url mode:mode error:outError] autorelease];
+	return [[self alloc] initWithURL:url mode:mode error:outError];
 }
 
 - (id)initWithFileName:(NSString *)fileName mode:(ZipFileMode)mode
@@ -70,7 +70,7 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 - (id)initWithFileName:(NSString *)fileName mode:(ZipFileMode)mode error:(NSError **)outError
 {
 	if (self = [super init]) {
-		_fileName = [fileName copy];
+		_fileName = fileName;
 		_mode = mode;
 
 		switch (_mode) {
@@ -98,7 +98,6 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 										  [NSString stringWithFormat:@"Error opening '%@'", fileName], NSLocalizedDescriptionKey, nil];
 				*outError = [NSError errorWithDomain:NSPOSIXErrorDomain code:errno userInfo:userInfo];
 			}
-			[self release];
 			self = nil;
 		}
 	}
@@ -118,7 +117,6 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 										  @"Writing to archives via URLs is not supported", NSLocalizedDescriptionKey, nil];
 				*outError = [NSError errorWithDomain:ZipFileErrorDomain code:10 userInfo:userInfo];
 			}
-			[self release];
 			self = nil;
 			return nil;
 		}
@@ -136,7 +134,6 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 											  [NSString stringWithFormat:@"%s", curl_easy_strerror(errno)], NSLocalizedRecoverySuggestionErrorKey, nil];
 					*outError = [NSError errorWithDomain:@"CURLErrorDomain" code:errno userInfo:userInfo];
 				}
-				[self release];
 				self = nil;
 			}
 		}
@@ -369,7 +366,7 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 	
 	BOOL crypted = ((file_info.flag & 1) != 0);
 	
-	NSDateComponents *components = [[[NSDateComponents alloc] init] autorelease];
+	NSDateComponents *components = [[NSDateComponents alloc] init];
 	[components setDay:file_info.tmu_date.tm_mday];
 	[components setMonth:file_info.tmu_date.tm_mon +1];
 	[components setYear:file_info.tmu_date.tm_year];
@@ -436,13 +433,6 @@ static NSString *ZipFileErrorDomain = @"ZipFileErrorDomain";
 		zipClose(_zipFile, NULL);
 		_zipFile = NULL;
 	}
-}
-
-- (void)dealloc
-{
-	[self close]; // No harm in calling twice
-	[_fileName release];
-	[super dealloc];
 }
 
 @end

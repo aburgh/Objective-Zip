@@ -123,7 +123,7 @@ long zlib_curl_tell(voidpf opaque, voidpf stream)
 long zlib_curl_seek(voidpf opaque, voidpf stream, uLong offset, int origin)
 {
 	zlib_curl_t zcurl = stream;
-	off_t newpos;
+	off_t newpos = 0;
 
 	switch (origin) {
 		case ZLIB_FILEFUNC_SEEK_CUR:

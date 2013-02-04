@@ -18,6 +18,11 @@
 		6C12FAD3127B5A9100D74DA1 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C12FAD2127B5A9100D74DA1 /* libz.dylib */; };
 		8C8F2D3A10EBC94B00F75833 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C8F2D3910EBC94B00F75833 /* Default.png */; };
 		8C8F2D9310EBCE0300F75833 /* ObjectiveZipIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C8F2D9210EBCE0300F75833 /* ObjectiveZipIcon.png */; };
+		96160C2B16C00904005CDEB4 /* libObjective-Zip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D49C9014CF160000C927AA /* libObjective-Zip.a */; };
+		96160C2C16C0098D005CDEB4 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C12FAD2127B5A9100D74DA1 /* libz.dylib */; };
+		96160C2D16C0099D005CDEB4 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 96F9F4131650978D00AEB953 /* libcurl.dylib */; };
+		96160C2E16C009C4005CDEB4 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C12FAD2127B5A9100D74DA1 /* libz.dylib */; };
+		96160C2F16C009C7005CDEB4 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 96F9F4131650978D00AEB953 /* libcurl.dylib */; };
 		96753BB314CF4BA700F6F871 /* Objective-Zip.h in Headers */ = {isa = PBXBuildFile; fileRef = 96753BB214CF4BA700F6F871 /* Objective-Zip.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		96753BB514CF4C4A00F6F871 /* ZipFileInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 8C83F49310E7CBCB002FB3CB /* ZipFileInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		968F700F16BC70EA00F60C24 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 96F9F4131650978D00AEB953 /* libcurl.dylib */; };
@@ -25,8 +30,6 @@
 		968F701816BC780400F60C24 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 968F701716BC780400F60C24 /* main.m */; };
 		968F701C16BC780400F60C24 /* ozip.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 968F701B16BC780400F60C24 /* ozip.1 */; };
 		968F702016BC786900F60C24 /* libObjective-Zip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D49C9014CF160000C927AA /* libObjective-Zip.a */; };
-		968F702216BC787C00F60C24 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 968F702116BC787C00F60C24 /* libz.dylib */; };
-		968F702416BC789C00F60C24 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 968F702316BC789C00F60C24 /* libcurl.dylib */; };
 		96A68BDD164E6F9B00C0E535 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96A68BDC164E6F9B00C0E535 /* SenTestingKit.framework */; };
 		96A68BDE164E6F9B00C0E535 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D49C2514CEE20E00C927AA /* Cocoa.framework */; };
 		96A68BE4164E6F9B00C0E535 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96A68BE2164E6F9B00C0E535 /* InfoPlist.strings */; };
@@ -49,7 +52,6 @@
 		96D49C3914CEE34B00C927AA /* ZipWriteStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C6D357510E5797600B63EFA /* ZipWriteStream.m */; };
 		96D49C3A14CEE35300C927AA /* ZipFileInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C83F49410E7CBCB002FB3CB /* ZipFileInfo.m */; };
 		96D49C3B14CEE36A00C927AA /* ZipReadStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBE431710E95FA300AC9ED3 /* ZipReadStream.m */; };
-		96D49C3E14CF08F300C927AA /* libObjective-Zip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D49C2414CEE20E00C927AA /* libObjective-Zip.a */; };
 		96D49C8214CF160000C927AA /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 8C6D352510E56A9000B63EFA /* ioapi.c */; };
 		96D49C8314CF160000C927AA /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 8C6D352710E56A9000B63EFA /* mztools.c */; };
 		96D49C8414CF160000C927AA /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 8C6D352910E56A9000B63EFA /* unzip.c */; };
@@ -66,7 +68,6 @@
 		96D49CAA14CF194A00C927AA /* ZipWriteStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 8C6D357410E5797600B63EFA /* ZipWriteStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		96D49CAB14CF195200C927AA /* ZipReadStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 8CBE431610E95FA300AC9ED3 /* ZipReadStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		96D49CAC14CF1DF400C927AA /* Objective_Zip.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D49CA014CF16B100C927AA /* Objective_Zip.m */; };
-		96D49CB214CF1F9E00C927AA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D49CB114CF1F9E00C927AA /* libz.dylib */; };
 		96F9F406164E96E500AEB953 /* Objective-Zip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D49C9614CF16B100C927AA /* Objective-Zip.framework */; };
 		96F9F40C16503C2400AEB953 /* curl_io.c in Sources */ = {isa = PBXBuildFile; fileRef = 96F9F40A16503C2400AEB953 /* curl_io.c */; };
 /* End PBXBuildFile section */
@@ -165,8 +166,6 @@
 		968F701716BC780400F60C24 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		968F701A16BC780400F60C24 /* ozip-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ozip-Prefix.pch"; sourceTree = "<group>"; };
 		968F701B16BC780400F60C24 /* ozip.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = ozip.1; sourceTree = "<group>"; };
-		968F702116BC787C00F60C24 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
-		968F702316BC789C00F60C24 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libcurl.dylib; sourceTree = DEVELOPER_DIR; };
 		96A68BDB164E6F9B00C0E535 /* ZipFileUnitTest.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZipFileUnitTest.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		96A68BDC164E6F9B00C0E535 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		96A68BE1164E6F9B00C0E535 /* ZipFileUnitTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZipFileUnitTest-Info.plist"; sourceTree = "<group>"; };
@@ -194,10 +193,9 @@
 		96D49C9E14CF16B100C927AA /* Objective-Zip-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Objective-Zip-Prefix.pch"; sourceTree = "<group>"; };
 		96D49C9F14CF16B100C927AA /* Objective_Zip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Objective_Zip.h; sourceTree = "<group>"; };
 		96D49CA014CF16B100C927AA /* Objective_Zip.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Objective_Zip.m; sourceTree = "<group>"; };
-		96D49CB114CF1F9E00C927AA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = SDKs/MacOSX10.7.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		96F9F40A16503C2400AEB953 /* curl_io.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = curl_io.c; path = MiniZip/curl_io.c; sourceTree = "<group>"; };
 		96F9F40E16503C4700AEB953 /* curl_io.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = curl_io.h; path = MiniZip/curl_io.h; sourceTree = "<group>"; };
-		96F9F4131650978D00AEB953 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = /usr/lib/libcurl.dylib; sourceTree = "<absolute>"; };
+		96F9F4131650978D00AEB953 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,11 +203,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96D49C3E14CF08F300C927AA /* libObjective-Zip.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
 				6C12FAD3127B5A9100D74DA1 /* libz.dylib in Frameworks */,
+				96160C2D16C0099D005CDEB4 /* libcurl.dylib in Frameworks */,
+				96160C2B16C00904005CDEB4 /* libObjective-Zip.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,8 +216,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				968F702416BC789C00F60C24 /* libcurl.dylib in Frameworks */,
-				968F702216BC787C00F60C24 /* libz.dylib in Frameworks */,
+				96160C2E16C009C4005CDEB4 /* libz.dylib in Frameworks */,
+				96160C2F16C009C7005CDEB4 /* libcurl.dylib in Frameworks */,
 				968F702016BC786900F60C24 /* libObjective-Zip.a in Frameworks */,
 				968F701516BC780400F60C24 /* Foundation.framework in Frameworks */,
 			);
@@ -264,7 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				968F700F16BC70EA00F60C24 /* libcurl.dylib in Frameworks */,
-				96D49CB214CF1F9E00C927AA /* libz.dylib in Frameworks */,
+				96160C2C16C0098D005CDEB4 /* libz.dylib in Frameworks */,
 				96D49CA714CF193100C927AA /* libObjective-Zip.a in Frameworks */,
 				96D49C9714CF16B100C927AA /* Cocoa.framework in Frameworks */,
 			);
@@ -301,8 +300,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				968F702316BC789C00F60C24 /* libcurl.dylib */,
-				968F702116BC787C00F60C24 /* libz.dylib */,
 				96C8290414CF3A4900E04CBB /* Readme.markdown */,
 				96C8290614CF44C400E04CBB /* Acknowledgements.rtf */,
 				8C6D353B10E56BA400B63EFA /* Objective-Zip */,
@@ -342,7 +339,6 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				96D49CB114CF1F9E00C927AA /* libz.dylib */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
@@ -1242,6 +1238,7 @@
 				968F701E16BC780400F60C24 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		96A68BE9164E6F9B00C0E535 /* Build configuration list for PBXNativeTarget "ZipFileUnitTest" */ = {
 			isa = XCConfigurationList;
